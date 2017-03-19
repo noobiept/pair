@@ -1,0 +1,7 @@
+{
+    "name": "pair",
+    "version": "1.0.0",
+    "devDependencies": {
+        "typescript": "~2.2.1"
+    }
+}
