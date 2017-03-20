@@ -60,9 +60,26 @@ module Main {
      * Create a tile element.
      */
     function createTile( name: string ) {
-        var tile = document.createElement( 'img' );
-        tile.src = 'images/' + name;
+        var front = document.createElement( 'img' );
+        front.src = 'images/' + name;
+        front.className = 'frontTile';
+
+        var back = document.createElement( 'img' );
+        back.src = 'images/tile_aqua.png';
+        back.className = 'backTile';
+
+        var tile = document.createElement( 'div' );
         tile.className = 'tile';
+
+        tile.appendChild( back );
+        tile.appendChild( front );
+
+        tile.addEventListener( 'click', function () {
+            tile.classList.add( 'showTile' );
+        } );
+        tile.addEventListener( 'transitionend', function () {
+            tile.classList.remove( 'showTile' );
+        } );
 
         return tile;
     }

@@ -1,3 +1,26 @@
 .tile {
+    display: inline-block;
+    position: relative;
     width: 100px;
+    height: 100px;
+    transition-timing-function: ease;
+    transition-duration: 0.5s;
+	transform-style: preserve-3d;
 }
+
+.frontTile, .backTile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    backface-visibility: hidden;
+}
+
+.frontTile {
+    transform: rotateY(180deg);
+}
+
+.showTile {
+    transform: rotateY(180deg);
+}
+
