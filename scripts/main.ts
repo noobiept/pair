@@ -1,3 +1,6 @@
+/// <reference path="../libraries/utilities.2.0.0.d.ts" />
+
+
 window.onload = function () {
     Main.init();
 };
@@ -24,16 +27,21 @@ module Main {
      */
     function newGame() {
         var imagesCopy = IMAGES.slice();
+        var tiles = [];
 
         for ( var a = 0; a < 5; a++ ) {
             let imageName = removeRandomElement( imagesCopy );
 
             // need to add a pair each time
-            let tile1 = createTile( imageName );;
-            let tile2 = createTile( imageName );;
+            tiles.push( createTile( imageName ) );
+            tiles.push( createTile( imageName ) );
+        }
 
-            CONTAINER.appendChild( tile1 );
-            CONTAINER.appendChild( tile2 );
+        Utilities.shuffle( tiles );
+
+        // add to the game
+        for ( var a = 0; a < tiles.length; a++ ) {
+            CONTAINER.appendChild( tiles[ a ] );
         }
     }
 
@@ -42,17 +50,9 @@ module Main {
      * Remove a random element from the given array.
      */
     function removeRandomElement<T>( array: T[] ): T {
-        let position = getRandomInt( 0, array.length - 1 );
+        let position = Utilities.getRandomInt( 0, array.length - 1 );
 
         return array.splice( position, 1 )[ 0 ];
-    }
-
-
-    /**
-     * Get a random integer in the given range (inclusive).
-     */
-    function getRandomInt( min: number, max: number ) {
-        return Math.round( min + ( max - min ) * Math.random() );
     }
 
 
