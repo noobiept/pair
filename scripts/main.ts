@@ -18,18 +18,24 @@ module Main {
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
 
-        newGame();
+        newGame( 6, 4 );
     }
 
 
     /**
      * Start a new game.
      */
-    function newGame() {
+    function newGame( columnCount: number, lineCount: number ) {
+        let totalTiles = columnCount * lineCount;
+
+        if ( totalTiles % 2 !== 0 ) {
+            throw new Error( `columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles} -- Total needs to be an even number.` );
+        }
+
         var imagesCopy = IMAGES.slice();
         var tiles = [];
 
-        for ( var a = 0; a < 5; a++ ) {
+        for ( var a = 0; a < totalTiles / 2; a++ ) {
             let imageName = removeRandomElement( imagesCopy );
 
             // need to add a pair each time
@@ -40,8 +46,15 @@ module Main {
         Utilities.shuffle( tiles );
 
         // add to the game
-        for ( var a = 0; a < tiles.length; a++ ) {
-            CONTAINER.appendChild( tiles[ a ] );
+        for ( var line = 0; line < lineCount; line++ ) {
+            let lineContainer = document.createElement( 'div' );
+            lineContainer.className = 'lineContainer';
+
+            for ( var column = 0; column < columnCount; column++ ) {
+                lineContainer.appendChild( tiles[ line * columnCount + column ] );
+            }
+
+            CONTAINER.appendChild( lineContainer );
         }
     }
 
