@@ -10,6 +10,8 @@ module Main {
 
     let CONTAINER: HTMLElement;
     let IMAGES = [ 'banana.png', 'black-berry-dark.png', 'black-berry-light.png', 'black-cherry.png', 'coconut.png', 'green-apple.png', 'green-grape.png', 'lemon.png', 'lime.png', 'orange.png', 'peach.png', 'pear.png', 'plum.png', 'raspberry.png', 'red-apple.png', 'red-grape.png', 'star-fruit.png', 'strawberry.png', 'watermelon.png' ];
+    var SELECTED1: HTMLElement | null = null;
+    var SELECTED2: HTMLElement | null = null;
 
 
     /**
@@ -83,17 +85,63 @@ module Main {
 
         var tile = document.createElement( 'div' );
         tile.className = 'tile';
+        tile.setAttribute( 'data-id', name );
 
         tile.appendChild( back );
         tile.appendChild( front );
 
         tile.addEventListener( 'click', function () {
-            tile.classList.add( 'showTile' );
-        } );
-        tile.addEventListener( 'transitionend', function () {
-            tile.classList.remove( 'showTile' );
+            tileSelected( tile );
         } );
 
         return tile;
+    }
+
+
+    /**
+     * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
+     */
+    function tileSelected( tile: HTMLElement ) {
+
+        // already was matched so can't be used anymore
+        if ( tile.getAttribute( 'data-done' ) ) {
+            return;
+        }
+
+        // don't allow the same tile to be selected again
+        if ( tile === SELECTED1 || tile === SELECTED2 ) {
+            return;
+        }
+
+        if ( !SELECTED1 ) {
+            SELECTED1 = tile;
+            tile.classList.add( 'showTile' );
+        }
+
+        else if ( !SELECTED2 ) {
+            SELECTED2 = tile;
+            tile.classList.add( 'showTile' );
+
+            // correct guess
+            if ( SELECTED1.getAttribute( 'data-id' ) === tile.getAttribute( 'data-id' ) ) {
+                SELECTED1.setAttribute( 'data-done', '1' );  // so we can ignore them later on
+                SELECTED2.setAttribute( 'data-done', '1' );
+                SELECTED1 = null;
+                SELECTED2 = null;
+            }
+
+            else {
+                tile.addEventListener( 'transitionend', invalidMatch );
+            }
+        }
+    }
+
+
+    function invalidMatch() {
+        SELECTED1!.classList.remove( 'showTile' );
+        SELECTED2!.classList.remove( 'showTile' );
+        SELECTED2!.removeEventListener( 'transitionend', invalidMatch );
+        SELECTED1 = null;
+        SELECTED2 = null;
     }
 }
