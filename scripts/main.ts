@@ -12,6 +12,9 @@ module Main {
     let IMAGES = [ 'banana.png', 'black-berry-dark.png', 'black-berry-light.png', 'black-cherry.png', 'coconut.png', 'green-apple.png', 'green-grape.png', 'lemon.png', 'lime.png', 'orange.png', 'peach.png', 'pear.png', 'plum.png', 'raspberry.png', 'red-apple.png', 'red-grape.png', 'star-fruit.png', 'strawberry.png', 'watermelon.png' ];
     var SELECTED1: HTMLElement | null = null;
     var SELECTED2: HTMLElement | null = null;
+    var MATCHED_TILES = 0;
+    var COLUMNS = 6;
+    var LINES = 4;
 
 
     /**
@@ -23,7 +26,7 @@ module Main {
         let restart = document.getElementById( 'Restart' )!;
         restart.onclick = restartGame;
 
-        newGame( 6, 4 );
+        newGame( COLUMNS, LINES );
     }
 
 
@@ -70,6 +73,7 @@ module Main {
     function clearGame() {
         SELECTED1 = null;
         SELECTED2 = null;
+        MATCHED_TILES = 0;
 
         while ( CONTAINER.lastElementChild ) {
             CONTAINER.removeChild( CONTAINER.lastElementChild );
@@ -82,7 +86,7 @@ module Main {
      */
     function restartGame() {
         clearGame();
-        newGame( 6, 4 );
+        newGame( COLUMNS, LINES );
     }
 
 
@@ -151,6 +155,15 @@ module Main {
                 SELECTED2.setAttribute( 'data-done', '1' );
                 SELECTED1 = null;
                 SELECTED2 = null;
+
+                MATCHED_TILES += 2;
+
+                // game completed
+                if ( MATCHED_TILES >= COLUMNS * LINES ) {
+                    window.alert( 'Game Completed!' );
+                    restartGame();
+                }
+
             }
 
             else {
