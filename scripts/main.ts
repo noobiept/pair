@@ -89,10 +89,7 @@ module Main {
 
         tile.appendChild( back );
         tile.appendChild( front );
-
-        tile.addEventListener( 'click', function () {
-            tileSelected( tile );
-        } );
+        tile.onmousedown = tileSelected;
 
         return tile;
     }
@@ -101,7 +98,8 @@ module Main {
     /**
      * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
      */
-    function tileSelected( tile: HTMLElement ) {
+    function tileSelected( this: HTMLElement ) {
+        let tile = this;
 
         // already was matched so can't be used anymore
         if ( tile.getAttribute( 'data-done' ) ) {
