@@ -46,3 +46,24 @@ body {
 .showTile {
     transform: rotateY(180deg);
 }
+
+@keyframes correct {
+    33% {
+        transform: rotateY(180deg) translate(5px);
+    }
+
+    66% {
+        transform: rotateY(180deg) translate(-5px);
+    }
+
+    100% {
+        transform: rotateY(180deg) translate(0px);
+    }
+}
+
+.correctGuess {
+    animation: correct;
+    animation-delay: 0.3s;  /* wait for the tile flip animation to end first */
+    animation-timing-function: ease;
+    animation-duration: 0.3s;
+}

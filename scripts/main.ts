@@ -153,6 +153,8 @@ module Main {
             if ( SELECTED1.getAttribute( 'data-id' ) === tile.getAttribute( 'data-id' ) ) {
                 SELECTED1.setAttribute( 'data-done', '1' );  // so we can ignore them later on
                 SELECTED2.setAttribute( 'data-done', '1' );
+                SELECTED1.classList.add( 'correctGuess' );
+                SELECTED2.classList.add( 'correctGuess' );
                 SELECTED1 = null;
                 SELECTED2 = null;
 
