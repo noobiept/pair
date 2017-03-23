@@ -20,6 +20,9 @@ module Main {
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
 
+        let restart = document.getElementById( 'Restart' )!;
+        restart.onclick = restartGame;
+
         newGame( 6, 4 );
     }
 
@@ -58,6 +61,28 @@ module Main {
 
             CONTAINER.appendChild( lineContainer );
         }
+    }
+
+
+    /**
+     * Clear the game elements.
+     */
+    function clearGame() {
+        SELECTED1 = null;
+        SELECTED2 = null;
+
+        while ( CONTAINER.lastElementChild ) {
+            CONTAINER.removeChild( CONTAINER.lastElementChild );
+        }
+    }
+
+
+    /**
+     * Clear the previous game state, and start a new one.
+     */
+    function restartGame() {
+        clearGame();
+        newGame( 6, 4 );
     }
 
 
