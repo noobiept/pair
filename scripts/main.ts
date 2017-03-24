@@ -15,6 +15,7 @@ module Main {
     var MATCHED_TILES = 0;
     var COLUMNS = 6;
     var LINES = 4;
+    var IMAGES_USED = 5;
 
 
     /**
@@ -26,29 +27,45 @@ module Main {
         let restart = document.getElementById( 'Restart' )!;
         restart.onclick = restartGame;
 
-        newGame( COLUMNS, LINES );
+        newGame( COLUMNS, LINES, IMAGES_USED );
     }
 
 
     /**
      * Start a new game.
      */
-    function newGame( columnCount: number, lineCount: number ) {
+    function newGame( columnCount: number, lineCount: number, imagesUsed: number ) {
         let totalTiles = columnCount * lineCount;
+        let totalPairs = totalTiles / 2;
 
         if ( totalTiles % 2 !== 0 ) {
-            throw new Error( `columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles} -- Total needs to be an even number.` );
+            throw new Error( `Total number of tiles needs to be an even number. -- columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles}` );
         }
 
+        if ( imagesUsed > totalPairs ) {
+            throw new Error( `Number of images used can't be higher than the total number of pairs. -- imagesUsed: ${imagesUsed} / totalPairs: ${totalPairs}` );
+        }
+
+        let pairsPerImage = Math.floor( totalPairs / imagesUsed );
+        let extraPairs = totalPairs % imagesUsed;
         var imagesCopy = IMAGES.slice();
         var tiles = [];
 
-        for ( var a = 0; a < totalTiles / 2; a++ ) {
+        for ( var a = 0; a < imagesUsed; a++ ) {
             let imageName = removeRandomElement( imagesCopy );
 
-            // need to add a pair each time
-            tiles.push( createTile( imageName ) );
-            tiles.push( createTile( imageName ) );
+            for ( var b = 0; b < pairsPerImage; b++ ) {
+                // need to add a pair each time
+                tiles.push( createTile( imageName ) );
+                tiles.push( createTile( imageName ) );
+            }
+
+            // add an extra pair until there are no more extra
+            if ( extraPairs > 0 ) {
+                tiles.push( createTile( imageName ) );
+                tiles.push( createTile( imageName ) );
+                extraPairs--;
+            }
         }
 
         Utilities.shuffle( tiles );
@@ -86,7 +103,7 @@ module Main {
      */
     function restartGame() {
         clearGame();
-        newGame( COLUMNS, LINES );
+        newGame( COLUMNS, LINES, IMAGES_USED );
     }
 
 
