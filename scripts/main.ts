@@ -24,10 +24,60 @@ module Main {
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
 
+        initMenu();
+        newGame( COLUMNS, LINES, IMAGES_USED );
+    }
+
+
+    /**
+     * Initialize the game menu elements.
+     * Update the controls initial value to match the game's.
+     * Set the on change event listeners.
+     */
+    function initMenu() {
+
+        // columns
+        let columns = <HTMLInputElement>document.getElementById( 'Columns' );
+        let columnsValue = <HTMLSpanElement>document.getElementById( 'ColumnsValue' );
+
+        columns.valueAsNumber = COLUMNS;
+        columns.onchange = function () {
+            COLUMNS = columns.valueAsNumber;
+            columnsValue.innerText = columns.value;
+            restartGame();
+        };
+
+        columnsValue.innerText = columns.value;
+
+        // lines
+        let lines = <HTMLInputElement>document.getElementById( 'Lines' );
+        let linesValue = <HTMLSpanElement>document.getElementById( 'LinesValue' );
+
+        lines.valueAsNumber = LINES;
+        lines.onchange = function () {
+            LINES = lines.valueAsNumber;
+            linesValue.innerText = lines.value;
+            restartGame();
+        };
+
+        linesValue.innerText = lines.value;
+
+        // images used
+        let imagesUsed = <HTMLInputElement>document.getElementById( 'ImagesUsed' );
+        let imagesUsedValue = <HTMLSpanElement>document.getElementById( 'ImagesUsedValue' );
+
+        imagesUsed.valueAsNumber = IMAGES_USED;
+        imagesUsed.onchange = function () {
+            IMAGES_USED = imagesUsed.valueAsNumber;
+            imagesUsedValue.innerText = imagesUsed.value;
+            restartGame();
+        };
+
+        imagesUsedValue.innerText = imagesUsed.value;
+
+        // restart
         let restart = document.getElementById( 'Restart' )!;
         restart.onclick = restartGame;
-
-        newGame( COLUMNS, LINES, IMAGES_USED );
     }
 
 
