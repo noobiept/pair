@@ -16,6 +16,8 @@ module Main {
     var COLUMNS = 6;
     var LINES = 4;
     var IMAGES_USED = 5;
+    var GUESSES_COUNT = 0;
+    var GUESSES_ELEMENT: HTMLElement;
 
 
     /**
@@ -23,6 +25,7 @@ module Main {
      */
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
+        GUESSES_ELEMENT = document.getElementById( 'GuessesCount' )!;
 
         initMenu();
         newGame( COLUMNS, LINES, IMAGES_USED );
@@ -141,6 +144,7 @@ module Main {
         SELECTED1 = null;
         SELECTED2 = null;
         MATCHED_TILES = 0;
+        setGuesses( 0 );
 
         while ( CONTAINER.lastElementChild ) {
             CONTAINER.removeChild( CONTAINER.lastElementChild );
@@ -216,6 +220,8 @@ module Main {
             SELECTED2 = tile;
             tile.classList.add( 'showTile' );
 
+            setGuesses( GUESSES_COUNT + 1 );
+
             // correct guess
             if ( SELECTED1.getAttribute( 'data-id' ) === tile.getAttribute( 'data-id' ) ) {
                 SELECTED1.setAttribute( 'data-done', '1' );  // so we can ignore them later on
@@ -242,11 +248,23 @@ module Main {
     }
 
 
+    /**
+     * A match was deemed invalid. Hide both tiles and reset the selection.
+     */
     function invalidMatch() {
         SELECTED1!.classList.remove( 'showTile' );
         SELECTED2!.classList.remove( 'showTile' );
         SELECTED2!.removeEventListener( 'transitionend', invalidMatch );
         SELECTED1 = null;
         SELECTED2 = null;
+    }
+
+
+    /**
+     * Set the number of guesses to the given value (also update the UI element).
+     */
+    function setGuesses( value: number ) {
+        GUESSES_COUNT = value;
+        GUESSES_ELEMENT.innerText = value.toString();
     }
 }
