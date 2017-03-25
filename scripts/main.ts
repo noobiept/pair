@@ -13,11 +13,10 @@ module Main {
     var SELECTED1: HTMLElement | null = null;
     var SELECTED2: HTMLElement | null = null;
     var MATCHED_TILES = 0;
-    var COLUMNS = 6;
-    var LINES = 4;
-    var IMAGES_USED = 5;
+    var COLUMNS = 0;
+    var LINES = 0;
+    var IMAGES_USED = 0;
     var GUESSES_COUNT = 0;
-    var GUESSES_ELEMENT: HTMLElement;
 
 
     /**
@@ -25,62 +24,14 @@ module Main {
      */
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
-        GUESSES_ELEMENT = document.getElementById( 'GuessesCount' )!;
 
-        initMenu();
-        newGame( COLUMNS, LINES, IMAGES_USED );
-    }
+        // initial game values
+        let columns = 6;
+        let lines = 4;
+        let imagesUsed = 5;
 
-
-    /**
-     * Initialize the game menu elements.
-     * Update the controls initial value to match the game's.
-     * Set the on change event listeners.
-     */
-    function initMenu() {
-
-        // columns
-        let columns = <HTMLInputElement>document.getElementById( 'Columns' );
-        let columnsValue = <HTMLSpanElement>document.getElementById( 'ColumnsValue' );
-
-        columns.valueAsNumber = COLUMNS;
-        columns.onchange = function () {
-            COLUMNS = columns.valueAsNumber;
-            columnsValue.innerText = columns.value;
-            restartGame();
-        };
-
-        columnsValue.innerText = columns.value;
-
-        // lines
-        let lines = <HTMLInputElement>document.getElementById( 'Lines' );
-        let linesValue = <HTMLSpanElement>document.getElementById( 'LinesValue' );
-
-        lines.valueAsNumber = LINES;
-        lines.onchange = function () {
-            LINES = lines.valueAsNumber;
-            linesValue.innerText = lines.value;
-            restartGame();
-        };
-
-        linesValue.innerText = lines.value;
-
-        // images used
-        let imagesUsed = <HTMLInputElement>document.getElementById( 'ImagesUsed' );
-        let imagesUsedValue = <HTMLSpanElement>document.getElementById( 'ImagesUsedValue' );
-
-        imagesUsed.valueAsNumber = IMAGES_USED;
-        imagesUsed.onchange = function () {
-            IMAGES_USED = imagesUsed.valueAsNumber;
-            imagesUsedValue.innerText = imagesUsed.value;
-            restartGame();
-        };
-
-        imagesUsedValue.innerText = imagesUsed.value;
-
-        // restart
-        let restart = document.getElementById( 'Restart' )!;
-        restart.onclick = restartGame;
+        Menu.init( columns, lines, imagesUsed );
+        newGame( columns, lines, imagesUsed );     // start the game with some default values
     }
 
 
@@ -98,6 +49,10 @@ module Main {
         if ( imagesUsed > totalPairs ) {
             throw new Error( `Number of images used can't be higher than the total number of pairs. -- imagesUsed: ${imagesUsed} / totalPairs: ${totalPairs}` );
         }
+
+        COLUMNS = columnCount;
+        LINES = lineCount;
+        IMAGES_USED = imagesUsed;
 
         let pairsPerImage = Math.floor( totalPairs / imagesUsed );
         let extraPairs = totalPairs % imagesUsed;
@@ -144,7 +99,8 @@ module Main {
         SELECTED1 = null;
         SELECTED2 = null;
         MATCHED_TILES = 0;
-        setGuesses( 0 );
+        GUESSES_COUNT = 0;
+        Menu.updateGuesses( 0 );
 
         while ( CONTAINER.lastElementChild ) {
             CONTAINER.removeChild( CONTAINER.lastElementChild );
@@ -155,8 +111,9 @@ module Main {
     /**
      * Clear the previous game state, and start a new one.
      */
-    function restartGame() {
+    export function restartGame( columns: number, lines: number, imagesUsed: number ) {
         clearGame();
+
         newGame( COLUMNS, LINES, IMAGES_USED );
     }
 
@@ -220,7 +177,9 @@ module Main {
             SELECTED2 = tile;
             tile.classList.add( 'showTile' );
 
-            setGuesses( GUESSES_COUNT + 1 );
+            // a guess was made (2 tiles selected)
+            GUESSES_COUNT++;
+            Menu.updateGuesses( GUESSES_COUNT );
 
             // correct guess
             if ( SELECTED1.getAttribute( 'data-id' ) === tile.getAttribute( 'data-id' ) ) {
@@ -257,14 +216,5 @@ module Main {
         SELECTED2!.removeEventListener( 'transitionend', invalidMatch );
         SELECTED1 = null;
         SELECTED2 = null;
-    }
-
-
-    /**
-     * Set the number of guesses to the given value (also update the UI element).
-     */
-    function setGuesses( value: number ) {
-        GUESSES_COUNT = value;
-        GUESSES_ELEMENT.innerText = value.toString();
     }
 }
