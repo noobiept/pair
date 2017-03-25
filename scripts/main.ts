@@ -42,6 +42,7 @@ module Main {
         CONTAINER = document.getElementById( 'Container' )!;
 
         Menu.init( DEFAULT_CONFIG );
+        Message.init();
         newGame( DEFAULT_CONFIG );
     }
 
@@ -137,6 +138,7 @@ module Main {
         }
 
         newGame( CONFIG );
+        Message.show( 'Restart' );
     }
 
 

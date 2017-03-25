@@ -67,3 +67,18 @@ body {
     animation-timing-function: ease;
     animation-duration: 0.3s;
 }
+
+/* --- Message --- */
+
+#MessageContainer {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+}
+
+.message {
+    background-color: black;
+    color: white;
+    padding: 5px 20px;
+}
