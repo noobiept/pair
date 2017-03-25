@@ -8,7 +8,7 @@ module Menu {
      * Update the controls initial value to match the game's.
      * Set the on change event listeners.
      */
-    export function init( columnsCount: number, linesCount: number, imagesUsedCount: number ) {
+    export function init( config: Config ) {
 
         // guess count
         GUESSES_ELEMENT = document.getElementById( 'GuessesCount' )!;
@@ -17,11 +17,12 @@ module Menu {
         let columns = <HTMLInputElement>document.getElementById( 'Columns' );
         let columnsValue = <HTMLSpanElement>document.getElementById( 'ColumnsValue' );
 
-        columns.valueAsNumber = columnsCount;
+        columns.valueAsNumber = config.columns;
         columns.onchange = function () {
-            COLUMNS = columns.valueAsNumber;
             columnsValue.innerText = columns.value;
-            restartGame();
+            Main.restartGame( {
+                columns: columns.valueAsNumber
+            } );
         };
 
         columnsValue.innerText = columns.value;
@@ -30,11 +31,12 @@ module Menu {
         let lines = <HTMLInputElement>document.getElementById( 'Lines' );
         let linesValue = <HTMLSpanElement>document.getElementById( 'LinesValue' );
 
-        lines.valueAsNumber = linesCount;
+        lines.valueAsNumber = config.lines;
         lines.onchange = function () {
-            LINES = lines.valueAsNumber;
             linesValue.innerText = lines.value;
-            restartGame();
+            Main.restartGame( {
+                lines: lines.valueAsNumber
+            } );
         };
 
         linesValue.innerText = lines.value;
@@ -43,18 +45,21 @@ module Menu {
         let imagesUsed = <HTMLInputElement>document.getElementById( 'ImagesUsed' );
         let imagesUsedValue = <HTMLSpanElement>document.getElementById( 'ImagesUsedValue' );
 
-        imagesUsed.valueAsNumber = imagesUsedCount;
+        imagesUsed.valueAsNumber = config.imagesUsed;
         imagesUsed.onchange = function () {
-            IMAGES_USED = imagesUsed.valueAsNumber;
             imagesUsedValue.innerText = imagesUsed.value;
-            restartGame();
+            Main.restartGame( {
+                imagesUsed: imagesUsed.valueAsNumber
+            } );
         };
 
         imagesUsedValue.innerText = imagesUsed.value;
 
         // restart
         let restart = document.getElementById( 'Restart' )!;
-        restart.onclick = Main.restartGame;
+        restart.onclick = function () {
+            Main.restartGame();
+        };
     }
 
 

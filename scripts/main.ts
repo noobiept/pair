@@ -6,6 +6,14 @@ window.onload = function () {
 };
 
 
+// values used to start a new game
+interface Config {
+    columns: number;
+    lines: number;
+    imagesUsed: number;
+}
+
+
 module Main {
 
     let CONTAINER: HTMLElement;
@@ -13,10 +21,18 @@ module Main {
     var SELECTED1: HTMLElement | null = null;
     var SELECTED2: HTMLElement | null = null;
     var MATCHED_TILES = 0;
-    var COLUMNS = 0;
-    var LINES = 0;
-    var IMAGES_USED = 0;
     var GUESSES_COUNT = 0;
+
+    var DEFAULT_CONFIG: Config = {
+        columns: 6,
+        lines: 4,
+        imagesUsed: 5
+    };
+    var CONFIG: Config = {
+        columns: 0,
+        lines: 0,
+        imagesUsed: 0
+    }
 
 
     /**
@@ -25,20 +41,18 @@ module Main {
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
 
-        // initial game values
-        let columns = 6;
-        let lines = 4;
-        let imagesUsed = 5;
-
-        Menu.init( columns, lines, imagesUsed );
-        newGame( columns, lines, imagesUsed );     // start the game with some default values
+        Menu.init( DEFAULT_CONFIG );
+        newGame( DEFAULT_CONFIG );
     }
 
 
     /**
      * Start a new game.
      */
-    function newGame( columnCount: number, lineCount: number, imagesUsed: number ) {
+    function newGame( config: Config ) {
+        let columnCount = config.columns;
+        let lineCount = config.lines;
+        let imagesUsed = config.imagesUsed;
         let totalTiles = columnCount * lineCount;
         let totalPairs = totalTiles / 2;
 
@@ -50,9 +64,7 @@ module Main {
             throw new Error( `Number of images used can't be higher than the total number of pairs. -- imagesUsed: ${imagesUsed} / totalPairs: ${totalPairs}` );
         }
 
-        COLUMNS = columnCount;
-        LINES = lineCount;
-        IMAGES_USED = imagesUsed;
+        CONFIG = config;
 
         let pairsPerImage = Math.floor( totalPairs / imagesUsed );
         let extraPairs = totalPairs % imagesUsed;
@@ -111,10 +123,20 @@ module Main {
     /**
      * Clear the previous game state, and start a new one.
      */
-    export function restartGame( columns: number, lines: number, imagesUsed: number ) {
+    export function restartGame( newConfig?: { [ key: string ]: number } ) {
         clearGame();
 
-        newGame( COLUMNS, LINES, IMAGES_USED );
+        // we receive a dictionary with possible changes to the current configuration
+        // update the game config based on that
+        if ( newConfig ) {
+            for ( var key in newConfig ) {
+                if ( newConfig.hasOwnProperty( key ) ) {
+                    ( <any>CONFIG )[ key ] = newConfig[ key ];
+                }
+            }
+        }
+
+        newGame( CONFIG );
     }
 
 
@@ -193,7 +215,7 @@ module Main {
                 MATCHED_TILES += 2;
 
                 // game completed
-                if ( MATCHED_TILES >= COLUMNS * LINES ) {
+                if ( MATCHED_TILES >= CONFIG.columns * CONFIG.lines ) {
                     window.alert( 'Game Completed!' );
                     restartGame();
                 }
