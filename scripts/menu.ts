@@ -18,10 +18,22 @@ module Menu {
         let columnsValue = <HTMLSpanElement>document.getElementById( 'ColumnsValue' );
 
         columns.valueAsNumber = config.columns;
-        columns.onchange = function () {
-            columnsValue.innerText = columns.value;
+        columns.onchange = function ( event ) {
+
+            var value = columns.valueAsNumber;
+
+            // we can't have an odd total number of tiles (because we need to add tiles in pairs)
+            // so we need to check if the new column/line combination isn't going to lead to an odd number of tiles
+            // as long as one of them is even, we're good (can't have both being odd)
+            if ( value % 2 !== 0 && lines.valueAsNumber % 2 !== 0 ) {
+                // when they're both odd, we need to turn one of them into an even number
+                value++;
+                columns.value = value.toString();
+            }
+
+            columnsValue.innerText = value.toString();
             Main.restartGame( {
-                columns: columns.valueAsNumber
+                columns: value
             } );
         };
 
@@ -33,9 +45,18 @@ module Menu {
 
         lines.valueAsNumber = config.lines;
         lines.onchange = function () {
-            linesValue.innerText = lines.value;
+
+            var value = lines.valueAsNumber;
+
+            // check the comment above (in columns 'change' listener)
+            if ( value % 2 !== 0 && columns.valueAsNumber % 2 !== 0 ) {
+                value++;
+                lines.value = value.toString();
+            }
+
+            linesValue.innerText = value.toString();
             Main.restartGame( {
-                lines: lines.valueAsNumber
+                lines: value
             } );
         };
 
