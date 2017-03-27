@@ -17,7 +17,7 @@ interface Config {
 module Main {
 
     let CONTAINER: HTMLElement;
-    let IMAGES = [ 'banana.png', 'black-berry-dark.png', 'black-berry-light.png', 'black-cherry.png', 'coconut.png', 'green-apple.png', 'green-grape.png', 'lemon.png', 'lime.png', 'orange.png', 'peach.png', 'pear.png', 'plum.png', 'raspberry.png', 'red-apple.png', 'red-grape.png', 'star-fruit.png', 'strawberry.png', 'watermelon.png' ];
+    let IMAGES = [ 'banana.png', 'black-berry-dark.png', 'black-berry-light.png', 'black-cherry.png', 'coconut.png', 'green-apple.png', 'green-grape.png', 'lemon.png', 'lime.png', 'orange.png', 'peach.png', 'pear.png', 'plum.png', 'raspberry.png', 'red-apple.png', 'red-cherry.png', 'red-grape.png', 'star-fruit.png', 'strawberry.png', 'watermelon.png' ];
     var SELECTED1: HTMLElement | null = null;
     var SELECTED2: HTMLElement | null = null;
     var MATCHED_TILES = 0;
@@ -61,8 +61,9 @@ module Main {
             throw new Error( `Total number of tiles needs to be an even number. -- columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles}` );
         }
 
+        // trying to use more images than possible (given the columns/lines combination)
         if ( imagesUsed > totalPairs ) {
-            throw new Error( `Number of images used can't be higher than the total number of pairs. -- imagesUsed: ${imagesUsed} / totalPairs: ${totalPairs}` );
+            imagesUsed = totalPairs;
         }
 
         CONFIG = config;
