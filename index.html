@@ -7,6 +7,7 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
 
         <script src="libraries/utilities.2.0.0.min.js"></script>
+        <script src="scripts/dialog.js"></script>
         <script src="scripts/menu.js"></script>
         <script src="scripts/message.js"></script>
         <script src="scripts/main.js"></script>
@@ -15,6 +16,13 @@
         <div id="Container"></div>
         <div>
             <div id="MessageContainer"></div>
+
+            <div id="DialogOverlay" class="hidden"></div>
+            <div id="Dialog" class="hidden">
+                <div id="DialogContent"></div>
+                <button id="DialogRestart">Restart</button>
+            </div>
+
             <div>
                 <span>Guesses: <span id="GuessesCount">0</span></span>
             </div>

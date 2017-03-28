@@ -43,6 +43,7 @@ module Main {
 
         Menu.init( DEFAULT_CONFIG );
         Message.init();
+        Dialog.init();
         newGame( DEFAULT_CONFIG );
     }
 
@@ -219,8 +220,9 @@ module Main {
 
                 // game completed
                 if ( MATCHED_TILES >= CONFIG.columns * CONFIG.lines ) {
-                    window.alert( 'Game Completed!' );
-                    restartGame();
+                    Dialog.show( 'Game Completed!', function () {
+                        restartGame();
+                    } );
                 }
 
             }

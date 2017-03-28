@@ -68,7 +68,8 @@ body {
     animation-duration: 0.3s;
 }
 
-/* --- Message --- */
+
+    /* --- Message --- */
 
 #MessageContainer {
     position: fixed;
@@ -81,4 +82,34 @@ body {
     background-color: black;
     color: white;
     padding: 5px 20px;
+}
+
+
+    /* --- Dialog --- */
+
+.hidden {
+    display: none;
+}
+
+#Dialog {
+    background-color: white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+}
+
+#DialogContent {
+    margin: 20px;
+    margin-top: 0;
+}
+
+#DialogOverlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
 }
