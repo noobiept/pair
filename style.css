@@ -12,6 +12,13 @@ body {
     text-align: center;
 }
 
+
+    /* --- Game/tile related --- */
+
+#Container {
+    margin: 10px;
+}
+
 .lineContainer {
     height: 100px;
     margin: 4px;
@@ -98,19 +105,28 @@ body {
     top: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0px 0px 10px 3px black;
+    border-radius: 2px;
+    padding: 2px;
+    min-width: 150px;
 }
 
 #DialogTitle {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.1);
     padding: 10px 20px;
+    font-size: 110%;
+    font-weight: bold;
 }
 
 #DialogBody {
-    margin: 10px 20px;
+    margin: 20px;
 }
 
 #DialogRestart {
     margin: 5px;
+}
+
+#Dialog hr {
+    opacity: 0.5;
 }
 
 #DialogOverlay {
@@ -120,4 +136,15 @@ body {
     left: 0;
     width: 100vw;
     height: 100vh;
+}
+
+
+    /* --- Menu --- */
+
+#Menu {
+    margin-bottom: 10px;
+}
+
+#Menu input, #Menu button {
+    vertical-align: middle;
 }
