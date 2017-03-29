@@ -218,13 +218,19 @@ module Main {
 
                 MATCHED_TILES += 2;
 
-                // game completed
-                if ( MATCHED_TILES >= CONFIG.columns * CONFIG.lines ) {
-                    Dialog.show( 'Game Completed!', function () {
-                        restartGame();
-                    } );
-                }
+                let totalTiles = CONFIG.columns * CONFIG.lines;
 
+                // game over (all tiles matched)
+                if ( MATCHED_TILES >= totalTiles ) {
+                    let totalPairs = totalTiles / 2;
+
+                    Dialog.show(
+                        `Game Over!`,
+                        `Total Pairs: ${totalPairs}<br />Guesses: ${GUESSES_COUNT}<br />Score: ${totalPairs / GUESSES_COUNT * 100}%`,
+                        function () {
+                            restartGame();
+                        } );
+                }
             }
 
             else {
