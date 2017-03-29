@@ -223,10 +223,11 @@ module Main {
                 // game over (all tiles matched)
                 if ( MATCHED_TILES >= totalTiles ) {
                     let totalPairs = totalTiles / 2;
+                    let score = Math.round( totalPairs / GUESSES_COUNT * 100 );
 
                     Dialog.show(
                         `Game Over!`,
-                        `Total Pairs: ${totalPairs}<br />Guesses: ${GUESSES_COUNT}<br />Score: ${totalPairs / GUESSES_COUNT * 100}%`,
+                        `Total Pairs: ${totalPairs}<br />Guesses: ${GUESSES_COUNT}<br />Score: ${score}%`,
                         function () {
                             restartGame();
                         } );
