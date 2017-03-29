@@ -41,6 +41,7 @@ module Main {
     export function init() {
         CONTAINER = document.getElementById( 'Container' )!;
 
+        HighScore.init();
         Menu.init( DEFAULT_CONFIG );
         Message.init();
         Dialog.init();
@@ -69,6 +70,7 @@ module Main {
 
         CONFIG = config;
 
+        // create the tiles
         let pairsPerImage = Math.floor( totalPairs / imagesUsed );
         let extraPairs = totalPairs % imagesUsed;
         var imagesCopy = IMAGES.slice();
@@ -104,6 +106,10 @@ module Main {
 
             CONTAINER.appendChild( lineContainer );
         }
+
+        // update the high-score
+        let score = HighScore.get( config );
+        Menu.updateHighScore( score );
     }
 
 
@@ -225,6 +231,7 @@ module Main {
                     let totalPairs = totalTiles / 2;
                     let score = Math.round( totalPairs / GUESSES_COUNT * 100 );
 
+                    HighScore.add( CONFIG, score );
                     Dialog.show(
                         `Game Over!`,
                         `Total Pairs: ${totalPairs}<br />Guesses: ${GUESSES_COUNT}<br />Score: ${score}%`,

@@ -1,5 +1,6 @@
 module Menu {
 
+    var HIGH_SCORE: HTMLElement;
     var GUESSES_ELEMENT: HTMLElement;
 
 
@@ -9,6 +10,9 @@ module Menu {
      * Set the on change event listeners.
      */
     export function init( config: Config ) {
+
+        // high-score
+        HIGH_SCORE = document.getElementById( 'HighScore' )!;
 
         // guess count
         GUESSES_ELEMENT = document.getElementById( 'GuessesCount' )!;
@@ -89,5 +93,17 @@ module Menu {
      */
     export function updateGuesses( value: number ) {
         GUESSES_ELEMENT.innerText = value.toString();
+    }
+
+
+    export function updateHighScore( score?: number ) {
+
+        if ( !score ) {
+            HIGH_SCORE.innerText = '---';
+        }
+
+        else {
+            HIGH_SCORE.innerText = score.toString();
+        }
     }
 }
