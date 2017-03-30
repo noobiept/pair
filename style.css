@@ -50,6 +50,10 @@ body {
     transform: rotateY(180deg);
 }
 
+.backTile:hover {
+    border: 1px solid gray;
+}
+
 .showTile {
     transform: rotateY(180deg);
 }

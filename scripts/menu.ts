@@ -103,7 +103,7 @@ module Menu {
         }
 
         else {
-            HIGH_SCORE.innerText = score.toString();
+            HIGH_SCORE.innerText = `${score}%`;
         }
     }
 }
