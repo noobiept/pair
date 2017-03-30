@@ -1,2 +1,4 @@
 /scripts/*.js
 /.vscode/**
+/node_modules/
+/release/
