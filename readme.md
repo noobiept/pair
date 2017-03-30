@@ -1,3 +1,5 @@
+# [Try it out](http://nbpt.eu/games/pair/) #
+
 Match identical tiles with each other, to make a pair. Find all the pairs to win the game.
 
 ![Screenshot](images/screenshot.png)
