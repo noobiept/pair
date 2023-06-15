@@ -1,18 +1,23 @@
-import { Main } from "./main";
-import { Config } from "./types";
+import { Config, PartialConfig } from "./types";
 
 export module Menu {
 
+    interface MenuArgs {
+        config: Config;
+        restartGame: ( config?: PartialConfig ) => void;
+    }
+
     var HIGH_SCORE: HTMLElement;
     var GUESSES_ELEMENT: HTMLElement;
-
+    let RESTART_GAME: ( config?: PartialConfig ) => void;
 
     /**
      * Initialize the game menu elements.
      * Update the controls initial value to match the game's.
      * Set the on change event listeners.
      */
-    export function init( config: Config ) {
+    export function init({ config, restartGame}: MenuArgs) {
+        RESTART_GAME = restartGame;
 
         // high-score
         HIGH_SCORE = document.getElementById( 'HighScore' )!;
@@ -39,7 +44,7 @@ export module Menu {
             }
 
             columnsValue.innerText = value.toString();
-            Main.restartGame( {
+            RESTART_GAME( {
                 columns: value
             } );
         };
@@ -62,7 +67,7 @@ export module Menu {
             }
 
             linesValue.innerText = value.toString();
-            Main.restartGame( {
+            RESTART_GAME( {
                 lines: value
             } );
         };
@@ -76,7 +81,7 @@ export module Menu {
         imagesUsed.valueAsNumber = config.imagesUsed;
         imagesUsed.onchange = function () {
             imagesUsedValue.innerText = imagesUsed.value;
-            Main.restartGame( {
+            RESTART_GAME( {
                 imagesUsed: imagesUsed.valueAsNumber
             } );
         };
@@ -86,7 +91,7 @@ export module Menu {
         // restart
         let restart = document.getElementById( 'Restart' )!;
         restart.onclick = function () {
-            Main.restartGame();
+            RESTART_GAME();
         };
     }
 

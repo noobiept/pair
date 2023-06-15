@@ -1,6 +1,6 @@
 import * as Utilities from '@drk4/utilities'
 import { HighScore } from './high-score';
-import { Config } from './types';
+import { Config, PartialConfig } from './types';
 import { Menu } from './menu';
 import { Message } from './message';
 import { Dialog } from './dialog';
@@ -40,7 +40,10 @@ export module Main {
         CONTAINER = document.getElementById( 'Container' )!;
 
         HighScore.init();
-        Menu.init( DEFAULT_CONFIG );
+        Menu.init( {
+            config: DEFAULT_CONFIG,
+            restartGame: (config) => restartGame(config)
+        } );
         Message.init();
         Dialog.init();
         newGame( DEFAULT_CONFIG );
@@ -130,7 +133,7 @@ export module Main {
     /**
      * Clear the previous game state, and start a new one.
      */
-    export function restartGame( newConfig?: { [ key: string ]: number } ) {
+    export function restartGame( newConfig?: PartialConfig ) {
         clearGame();
 
         // we receive a dictionary with possible changes to the current configuration
@@ -138,7 +141,12 @@ export module Main {
         if ( newConfig ) {
             for ( var key in newConfig ) {
                 if ( newConfig.hasOwnProperty( key ) ) {
-                    ( <any>CONFIG )[ key ] = newConfig[ key ];
+                    const typedKey = key as keyof Config;
+                    const newValue = newConfig[ typedKey ];
+
+                    if ( newValue ) {
+                        CONFIG[ typedKey ] = newValue;
+                    }
                 }
             }
         }
