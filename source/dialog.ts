@@ -1,4 +1,4 @@
-module Dialog {
+export module Dialog {
 
     var DIALOG: HTMLElement;
     var OVERLAY: HTMLElement;

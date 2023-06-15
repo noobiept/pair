@@ -1,14 +1,22 @@
 {
     "name": "pair",
-    "version": "1.0.0",
+    "version": "1.1.0",
+    "scripts": {
+        "start": "webpack serve --mode=development",
+        "build": "webpack --mode=production"
+    },
     "devDependencies": {
-        "grunt": "~1.0.1",
-        "grunt-contrib-copy": "~1.0.0",
-        "grunt-contrib-uglify": "~2.2.0",
-        "grunt-contrib-cssmin": "~2.0.0",
-        "grunt-contrib-clean": "~1.0.0",
-        "grunt-processhtml": "~0.4.1",
-        "grunt-ts": "~6.0.0-beta.15",
-        "typescript": "~2.2.2"
+        "circular-dependency-plugin": "^5.2.2",
+        "css-loader": "^6.8.1",
+        "html-webpack-plugin": "^5.5.3",
+        "style-loader": "^3.3.3",
+        "ts-loader": "9",
+        "typescript": "5",
+        "webpack-cli": "^5.1.4",
+        "webpack-dev-server": "^4.15.1"
+    },
+    "dependencies": {
+        "@drk4/utilities": "^6.0.0"
     }
 }
+

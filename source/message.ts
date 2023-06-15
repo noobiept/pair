@@ -1,4 +1,4 @@
-module Message {
+export module Message {
 
     var CONTAINER: HTMLElement;
 

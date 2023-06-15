@@ -1,4 +1,7 @@
-module Menu {
+import { Main } from "./main";
+import { Config } from "./types";
+
+export module Menu {
 
     var HIGH_SCORE: HTMLElement;
     var GUESSES_ELEMENT: HTMLElement;

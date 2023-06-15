@@ -1,20 +1,18 @@
-/// <reference path="../libraries/utilities.2.0.0.d.ts" />
+import * as Utilities from '@drk4/utilities'
+import { HighScore } from './high-score';
+import { Config } from './types';
+import { Menu } from './menu';
+import { Message } from './message';
+import { Dialog } from './dialog';
 
+import '../style.css'
 
 window.onload = function () {
     Main.init();
 };
 
 
-// values used to start a new game
-interface Config {
-    columns: number;
-    lines: number;
-    imagesUsed: number;
-}
-
-
-module Main {
+export module Main {
 
     let CONTAINER: HTMLElement;
     let IMAGES = [ 'banana.png', 'black-berry-dark.png', 'black-berry-light.png', 'black-cherry.png', 'coconut.png', 'green-apple.png', 'green-grape.png', 'lemon.png', 'lime.png', 'orange.png', 'peach.png', 'pear.png', 'plum.png', 'raspberry.png', 'red-apple.png', 'red-cherry.png', 'red-grape.png', 'star-fruit.png', 'strawberry.png', 'watermelon.png' ];

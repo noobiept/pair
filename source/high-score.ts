@@ -1,4 +1,6 @@
-module HighScore {
+import { Config } from "./types";
+
+export module HighScore {
 
     interface Scores {
         [ config: string ]: number
