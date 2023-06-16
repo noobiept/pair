@@ -1,37 +1,35 @@
-export module Dialog {
-    var DIALOG: HTMLElement;
-    var OVERLAY: HTMLElement;
-    var TITLE: HTMLElement;
-    var BODY: HTMLElement;
-    var ON_CLOSE: () => void;
+let DIALOG: HTMLElement;
+let OVERLAY: HTMLElement;
+let TITLE: HTMLElement;
+let BODY: HTMLElement;
+let ON_CLOSE: () => void;
 
-    export function init() {
-        DIALOG = document.getElementById('Dialog')!;
-        OVERLAY = document.getElementById('DialogOverlay')!;
-        TITLE = document.getElementById('DialogTitle')!;
-        BODY = document.getElementById('DialogBody')!;
+export function init() {
+    DIALOG = document.getElementById('Dialog') as HTMLElement;
+    OVERLAY = document.getElementById('DialogOverlay') as HTMLElement;
+    TITLE = document.getElementById('DialogTitle') as HTMLElement;
+    BODY = document.getElementById('DialogBody') as HTMLElement;
 
-        let restart = document.getElementById('DialogRestart')!;
-        restart.onclick = function () {
-            hide();
+    const restart = document.getElementById('DialogRestart') as HTMLElement;
+    restart.onclick = function () {
+        hide();
 
-            if (ON_CLOSE) {
-                ON_CLOSE();
-            }
-        };
-    }
+        if (ON_CLOSE) {
+            ON_CLOSE();
+        }
+    };
+}
 
-    export function show(title: string, body: string, onClose: () => void) {
-        TITLE.innerHTML = title;
-        BODY.innerHTML = body;
-        ON_CLOSE = onClose;
+export function show(title: string, body: string, onClose: () => void) {
+    TITLE.innerHTML = title;
+    BODY.innerHTML = body;
+    ON_CLOSE = onClose;
 
-        DIALOG.classList.remove('hidden');
-        OVERLAY.classList.remove('hidden');
-    }
+    DIALOG.classList.remove('hidden');
+    OVERLAY.classList.remove('hidden');
+}
 
-    function hide() {
-        DIALOG.classList.add('hidden');
-        OVERLAY.classList.add('hidden');
-    }
+function hide() {
+    DIALOG.classList.add('hidden');
+    OVERLAY.classList.add('hidden');
 }

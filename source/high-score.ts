@@ -1,62 +1,60 @@
 import { Config } from './types';
 
-export module HighScore {
-    interface Scores {
-        [config: string]: number;
+interface Scores {
+    [config: string]: number;
+}
+
+let SCORES: Scores = {};
+
+export function init() {
+    const scores = loadFromStorage();
+
+    if (scores) {
+        SCORES = scores;
     }
+}
 
-    var SCORES: Scores = {};
+/**
+ * Save a single high-score per configuration.
+ * Higher value is better.
+ */
+export function add(config: Config, score: number) {
+    const key = getKey(config);
+    const previousScore = SCORES[key];
 
-    export function init() {
-        let scores = loadFromStorage();
-
-        if (scores) {
-            SCORES = scores;
-        }
+    // save the score if its the first one, or if its better than the previous
+    if (!previousScore || score > previousScore) {
+        SCORES[key] = score;
+        saveToStorage();
     }
+}
 
-    /**
-     * Save a single high-score per configuration.
-     * Higher value is better.
-     */
-    export function add(config: Config, score: number) {
-        let key = getKey(config);
-        let previousScore = SCORES[key];
+/**
+ * Get the high-score of the given configuration.
+ */
+export function get(config: Config) {
+    return SCORES[getKey(config)];
+}
 
-        // save the score if its the first one, or if its better than the previous
-        if (!previousScore || score > previousScore) {
-            SCORES[key] = score;
-            saveToStorage();
-        }
-    }
+/**
+ * Save the high-scores to local storage.
+ */
+function saveToStorage() {
+    localStorage.setItem('pair_high_scores', JSON.stringify(SCORES));
+}
 
-    /**
-     * Get the high-score of the given configuration.
-     */
-    export function get(config: Config) {
-        return SCORES[getKey(config)];
-    }
+/**
+ * Get the high-scores that are saved on the local storage.
+ */
+function loadFromStorage() {
+    const value = localStorage.getItem('pair_high_scores');
 
-    /**
-     * Save the high-scores to local storage.
-     */
-    function saveToStorage() {
-        localStorage.setItem('pair_high_scores', JSON.stringify(SCORES));
-    }
+    return value && JSON.parse(value);
+}
 
-    /**
-     * Get the high-scores that are saved on the local storage.
-     */
-    function loadFromStorage() {
-        var value = localStorage.getItem('pair_high_scores');
-
-        return value && JSON.parse(value);
-    }
-
-    /**
-     * The key is used to access the high-score (1 score per configuration).
-     */
-    function getKey(config: Config) {
-        return `${config.columns}/${config.lines}/${config.imagesUsed}`;
-    }
+/**
+ * The key is used to access the high-score (1 score per configuration).
+ */
+function getKey(config: Config) {
+    return `${config.columns}/${config.lines}/${config.imagesUsed}`;
 }

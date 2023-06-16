@@ -1,20 +1,18 @@
-export module Message {
-    var CONTAINER: HTMLElement;
+let CONTAINER: HTMLElement;
 
-    export function init() {
-        CONTAINER = document.getElementById('MessageContainer')!;
-    }
+export function init() {
+    CONTAINER = document.getElementById('MessageContainer') as HTMLElement;
+}
 
-    export function show(text: string) {
-        let message = document.createElement('div');
+export function show(text: string) {
+    const message = document.createElement('div');
 
-        message.className = 'message';
-        message.innerText = text;
+    message.className = 'message';
+    message.innerText = text;
 
-        window.setTimeout(function () {
-            CONTAINER.removeChild(message);
-        }, 1000);
+    window.setTimeout(function () {
+        CONTAINER.removeChild(message);
+    }, 1000);
 
-        CONTAINER.appendChild(message);
-    }
+    CONTAINER.appendChild(message);
 }
