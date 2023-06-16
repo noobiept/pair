@@ -5,7 +5,7 @@ import { Menu } from './menu';
 import { Message } from './message';
 import { Dialog } from './dialog';
 
-import '../style.css'
+import './style.css'
 
 window.onload = function () {
     Main.init();

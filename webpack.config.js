@@ -27,12 +27,12 @@ module.exports = {
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, '')
+            directory: path.join(__dirname, 'source')
         }
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "index.html",
+            template: "./source/index.html",
         }),
         new CircularDependencyPlugin({
             // exclude detection of files based on a RegExp
