@@ -1,21 +1,40 @@
-import * as Utilities from '@drk4/utilities'
+import * as Utilities from '@drk4/utilities';
 import { HighScore } from './high-score';
 import { Config, PartialConfig } from './types';
 import { Menu } from './menu';
 import { Message } from './message';
 import { Dialog } from './dialog';
 
-import './style.css'
+import './style.css';
 
 window.onload = function () {
     Main.init();
 };
 
-
 export module Main {
-
     let CONTAINER: HTMLElement;
-    let IMAGES = [ 'banana.png', 'black-berry-dark.png', 'black-berry-light.png', 'black-cherry.png', 'coconut.png', 'green-apple.png', 'green-grape.png', 'lemon.png', 'lime.png', 'orange.png', 'peach.png', 'pear.png', 'plum.png', 'raspberry.png', 'red-apple.png', 'red-cherry.png', 'red-grape.png', 'star-fruit.png', 'strawberry.png', 'watermelon.png' ];
+    let IMAGES = [
+        'banana.png',
+        'black-berry-dark.png',
+        'black-berry-light.png',
+        'black-cherry.png',
+        'coconut.png',
+        'green-apple.png',
+        'green-grape.png',
+        'lemon.png',
+        'lime.png',
+        'orange.png',
+        'peach.png',
+        'pear.png',
+        'plum.png',
+        'raspberry.png',
+        'red-apple.png',
+        'red-cherry.png',
+        'red-grape.png',
+        'star-fruit.png',
+        'strawberry.png',
+        'watermelon.png',
+    ];
     var SELECTED1: HTMLElement | null = null;
     var SELECTED2: HTMLElement | null = null;
     var MATCHED_TILES = 0;
@@ -24,95 +43,94 @@ export module Main {
     var DEFAULT_CONFIG: Config = {
         columns: 6,
         lines: 4,
-        imagesUsed: 5
+        imagesUsed: 5,
     };
     var CONFIG: Config = {
         columns: 0,
         lines: 0,
-        imagesUsed: 0
-    }
-
+        imagesUsed: 0,
+    };
 
     /**
      * Runs once at the start of the game.
      */
     export function init() {
-        CONTAINER = document.getElementById( 'Container' )!;
+        CONTAINER = document.getElementById('Container')!;
 
         HighScore.init();
-        Menu.init( {
+        Menu.init({
             config: DEFAULT_CONFIG,
-            restartGame: (config) => restartGame(config)
-        } );
+            restartGame: (config) => restartGame(config),
+        });
         Message.init();
         Dialog.init();
-        newGame( DEFAULT_CONFIG );
+        newGame(DEFAULT_CONFIG);
     }
-
 
     /**
      * Start a new game.
      */
-    function newGame( config: Config ) {
+    function newGame(config: Config) {
         let columnCount = config.columns;
         let lineCount = config.lines;
         let imagesUsed = config.imagesUsed;
         let totalTiles = columnCount * lineCount;
         let totalPairs = totalTiles / 2;
 
-        if ( totalTiles % 2 !== 0 ) {
-            throw new Error( `Total number of tiles needs to be an even number. -- columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles}` );
+        if (totalTiles % 2 !== 0) {
+            throw new Error(
+                `Total number of tiles needs to be an even number. -- columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles}`
+            );
         }
 
         // trying to use more images than possible (given the columns/lines combination)
-        if ( imagesUsed > totalPairs ) {
+        if (imagesUsed > totalPairs) {
             imagesUsed = totalPairs;
         }
 
         CONFIG = config;
 
         // create the tiles
-        let pairsPerImage = Math.floor( totalPairs / imagesUsed );
+        let pairsPerImage = Math.floor(totalPairs / imagesUsed);
         let extraPairs = totalPairs % imagesUsed;
         var imagesCopy = IMAGES.slice();
         var tiles = [];
 
-        for ( var a = 0; a < imagesUsed; a++ ) {
-            let imageName = removeRandomElement( imagesCopy );
+        for (var a = 0; a < imagesUsed; a++) {
+            let imageName = removeRandomElement(imagesCopy);
 
-            for ( var b = 0; b < pairsPerImage; b++ ) {
+            for (var b = 0; b < pairsPerImage; b++) {
                 // need to add a pair each time
-                tiles.push( createTile( imageName ) );
-                tiles.push( createTile( imageName ) );
+                tiles.push(createTile(imageName));
+                tiles.push(createTile(imageName));
             }
 
             // add an extra pair until there are no more extra
-            if ( extraPairs > 0 ) {
-                tiles.push( createTile( imageName ) );
-                tiles.push( createTile( imageName ) );
+            if (extraPairs > 0) {
+                tiles.push(createTile(imageName));
+                tiles.push(createTile(imageName));
                 extraPairs--;
             }
         }
 
-        Utilities.shuffle( tiles );
+        Utilities.shuffle(tiles);
 
         // add to the game
-        for ( var line = 0; line < lineCount; line++ ) {
-            let lineContainer = document.createElement( 'div' );
+        for (var line = 0; line < lineCount; line++) {
+            let lineContainer = document.createElement('div');
             lineContainer.className = 'lineContainer';
 
-            for ( var column = 0; column < columnCount; column++ ) {
-                lineContainer.appendChild( tiles[ line * columnCount + column ] );
+            for (var column = 0; column < columnCount; column++) {
+                lineContainer.appendChild(tiles[line * columnCount + column]);
             }
 
-            CONTAINER.appendChild( lineContainer );
+            CONTAINER.appendChild(lineContainer);
         }
 
         // update the high-score
-        let score = HighScore.get( config );
-        Menu.updateHighScore( score );
+        let score = HighScore.get(config);
+        Menu.updateHighScore(score);
     }
-
 
     /**
      * Clear the game elements.
@@ -122,109 +140,106 @@ export module Main {
         SELECTED2 = null;
         MATCHED_TILES = 0;
         GUESSES_COUNT = 0;
-        Menu.updateGuesses( 0 );
+        Menu.updateGuesses(0);
 
-        while ( CONTAINER.lastElementChild ) {
-            CONTAINER.removeChild( CONTAINER.lastElementChild );
+        while (CONTAINER.lastElementChild) {
+            CONTAINER.removeChild(CONTAINER.lastElementChild);
         }
     }
-
 
     /**
      * Clear the previous game state, and start a new one.
      */
-    export function restartGame( newConfig?: PartialConfig ) {
+    export function restartGame(newConfig?: PartialConfig) {
         clearGame();
 
         // we receive a dictionary with possible changes to the current configuration
         // update the game config based on that
-        if ( newConfig ) {
-            for ( var key in newConfig ) {
-                if ( newConfig.hasOwnProperty( key ) ) {
+        if (newConfig) {
+            for (var key in newConfig) {
+                if (newConfig.hasOwnProperty(key)) {
                     const typedKey = key as keyof Config;
-                    const newValue = newConfig[ typedKey ];
+                    const newValue = newConfig[typedKey];
 
-                    if ( newValue ) {
-                        CONFIG[ typedKey ] = newValue;
+                    if (newValue) {
+                        CONFIG[typedKey] = newValue;
                     }
                 }
             }
         }
 
-        newGame( CONFIG );
-        Message.show( 'Restart' );
+        newGame(CONFIG);
+        Message.show('Restart');
     }
-
 
     /**
      * Remove a random element from the given array.
      */
-    function removeRandomElement<T>( array: T[] ): T {
-        let position = Utilities.getRandomInt( 0, array.length - 1 );
+    function removeRandomElement<T>(array: T[]): T {
+        let position = Utilities.getRandomInt(0, array.length - 1);
 
-        return array.splice( position, 1 )[ 0 ];
+        return array.splice(position, 1)[0];
     }
-
 
     /**
      * Create a tile element.
      */
-    function createTile( name: string ) {
-        var front = document.createElement( 'img' );
+    function createTile(name: string) {
+        var front = document.createElement('img');
         front.src = 'images/' + name;
         front.className = 'frontTile';
 
-        var back = document.createElement( 'img' );
+        var back = document.createElement('img');
         back.src = 'images/tile_aqua.png';
         back.className = 'backTile';
 
-        var tile = document.createElement( 'div' );
+        var tile = document.createElement('div');
         tile.className = 'tile';
-        tile.setAttribute( 'data-id', name );
+        tile.setAttribute('data-id', name);
 
-        tile.appendChild( back );
-        tile.appendChild( front );
+        tile.appendChild(back);
+        tile.appendChild(front);
         tile.onmousedown = tileSelected;
 
         return tile;
     }
 
-
     /**
      * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
      */
-    function tileSelected( this: HTMLElement ) {
+    function tileSelected(this: HTMLElement) {
         let tile = this;
 
         // already was matched so can't be used anymore
-        if ( tile.getAttribute( 'data-done' ) ) {
+        if (tile.getAttribute('data-done')) {
             return;
         }
 
         // don't allow the same tile to be selected again
-        if ( tile === SELECTED1 || tile === SELECTED2 ) {
+        if (tile === SELECTED1 || tile === SELECTED2) {
             return;
         }
 
-        if ( !SELECTED1 ) {
+        if (!SELECTED1) {
             SELECTED1 = tile;
-            tile.classList.add( 'showTile' );
-        }
-
-        else if ( !SELECTED2 ) {
+            tile.classList.add('showTile');
+        } else if (!SELECTED2) {
             SELECTED2 = tile;
-            tile.classList.add( 'showTile' );
+            tile.classList.add('showTile');
 
             // a guess was made (2 tiles selected)
             GUESSES_COUNT++;
-            Menu.updateGuesses( GUESSES_COUNT );
+            Menu.updateGuesses(GUESSES_COUNT);
 
             // correct guess
-            if ( SELECTED1.getAttribute( 'data-id' ) === tile.getAttribute( 'data-id' ) ) {
-                SELECTED1.setAttribute( 'data-done', '1' );  // so we can ignore them later on
-                SELECTED2.setAttribute( 'data-done', '1' );
-                SELECTED1.classList.add( 'correctGuess' );
-                SELECTED2.classList.add( 'correctGuess' );
+            if (
+                SELECTED1.getAttribute('data-id') ===
+                tile.getAttribute('data-id')
+            ) {
+                SELECTED1.setAttribute('data-done', '1'); // so we can ignore them later on
+                SELECTED2.setAttribute('data-done', '1');
+                SELECTED1.classList.add('correctGuess');
+                SELECTED2.classList.add('correctGuess');
                 SELECTED1 = null;
                 SELECTED2 = null;
 
@@ -233,34 +248,32 @@ export module Main {
                 let totalTiles = CONFIG.columns * CONFIG.lines;
 
                 // game over (all tiles matched)
-                if ( MATCHED_TILES >= totalTiles ) {
+                if (MATCHED_TILES >= totalTiles) {
                     let totalPairs = totalTiles / 2;
-                    let score = Math.round( totalPairs / GUESSES_COUNT * 100 );
+                    let score = Math.round((totalPairs / GUESSES_COUNT) * 100);
 
-                    HighScore.add( CONFIG, score );
+                    HighScore.add(CONFIG, score);
                     Dialog.show(
                         `Game Over!`,
                         `Total Pairs: ${totalPairs}<br />Guesses: ${GUESSES_COUNT}<br />Score: ${score}%`,
                         function () {
                             restartGame();
-                        } );
+                        }
+                    );
                 }
-            }
-
-            else {
-                tile.addEventListener( 'transitionend', invalidMatch );
+            } else {
+                tile.addEventListener('transitionend', invalidMatch);
             }
         }
     }
-
 
     /**
      * A match was deemed invalid. Hide both tiles and reset the selection.
      */
     function invalidMatch() {
-        SELECTED1!.classList.remove( 'showTile' );
-        SELECTED2!.classList.remove( 'showTile' );
-        SELECTED2!.removeEventListener( 'transitionend', invalidMatch );
+        SELECTED1!.classList.remove('showTile');
+        SELECTED2!.classList.remove('showTile');
+        SELECTED2!.removeEventListener('transitionend', invalidMatch);
         SELECTED1 = null;
         SELECTED2 = null;
     }

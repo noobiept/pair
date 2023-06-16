@@ -12,8 +12,7 @@ body {
     text-align: center;
 }
 
-
-    /* --- Game/tile related --- */
+/* --- Game/tile related --- */
 
 #Container {
     margin: 10px;
@@ -31,11 +30,12 @@ body {
     height: 100px;
     transition-timing-function: ease;
     transition-duration: 0.5s;
-	transform-style: preserve-3d;
+    transform-style: preserve-3d;
     margin: 0 2px;
 }
 
-.frontTile, .backTile {
+.frontTile,
+.backTile {
     position: absolute;
     top: 0;
     left: 0;
@@ -74,13 +74,12 @@ body {
 
 .correctGuess {
     animation: correct;
-    animation-delay: 0.3s;  /* wait for the tile flip animation to end first */
+    animation-delay: 0.3s; /* wait for the tile flip animation to end first */
     animation-timing-function: ease;
     animation-duration: 0.3s;
 }
 
-
-    /* --- Message --- */
+/* --- Message --- */
 
 #MessageContainer {
     position: fixed;
@@ -95,8 +94,7 @@ body {
     padding: 5px 20px;
 }
 
-
-    /* --- Dialog --- */
+/* --- Dialog --- */
 
 .hidden {
     display: none;
@@ -142,13 +140,13 @@ body {
     height: 100vh;
 }
 
-
-    /* --- Menu --- */
+/* --- Menu --- */
 
 #Menu {
     margin-bottom: 10px;
 }
 
-#Menu input, #Menu button {
+#Menu input,
+#Menu button {
     vertical-align: middle;
 }

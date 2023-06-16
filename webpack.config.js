@@ -1,38 +1,38 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const CircularDependencyPlugin = require("circular-dependency-plugin");
-const path = require("path");
-const package = require("./package.json");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
+const path = require('path');
+const package = require('./package.json');
 
 module.exports = {
-    entry: "./source/main.ts",
+    entry: './source/main.ts',
     output: {
-        filename: "bundle.js",
+        filename: 'bundle.js',
         path: path.resolve(__dirname, `release/pair ${package.version}`),
     },
     module: {
         rules: [
             {
                 test: /\.tsx?$/,
-                use: "ts-loader",
+                use: 'ts-loader',
                 exclude: /node_modules/,
             },
             {
                 test: /\.css$/i,
-                use: ["style-loader", "css-loader"],
+                use: ['style-loader', 'css-loader'],
             },
         ],
     },
     resolve: {
-        extensions: [".js", ".ts"],
+        extensions: ['.js', '.ts'],
     },
     devServer: {
         static: {
-            directory: path.join(__dirname, 'source')
-        }
+            directory: path.join(__dirname, 'source'),
+        },
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./source/index.html",
+            template: './source/index.html',
         }),
         new CircularDependencyPlugin({
             // exclude detection of files based on a RegExp

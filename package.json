@@ -3,12 +3,15 @@
     "version": "1.1.0",
     "scripts": {
         "start": "webpack serve --mode=development",
-        "build": "webpack --mode=production"
+        "build": "webpack --mode=production",
+        "format:check": "prettier --check .",
+        "format:write": "prettier --write ."
     },
     "devDependencies": {
         "circular-dependency-plugin": "^5.2.2",
         "css-loader": "^6.8.1",
         "html-webpack-plugin": "^5.5.3",
+        "prettier": "^2.8.8",
         "style-loader": "^3.3.3",
         "ts-loader": "9",
         "typescript": "5",
@@ -17,6 +20,9 @@
     },
     "dependencies": {
         "@drk4/utilities": "^6.0.0"
+    },
+    "prettier": {
+        "tabWidth": 4,
+        "singleQuote": true
     }
 }
-
