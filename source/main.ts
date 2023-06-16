@@ -194,7 +194,9 @@ function createTile(name: string) {
 
     tile.appendChild(back);
     tile.appendChild(front);
-    tile.onmousedown = tileSelected;
+    tile.onmousedown = () => {
+        tileSelected(tile);
+    };
 
     return tile;
 }
@@ -202,10 +204,7 @@ function createTile(name: string) {
 /**
  * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
  */
-function tileSelected(this: HTMLElement) {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const tile = this;
-
+function tileSelected(tile: HTMLElement) {
     // already was matched so can't be used anymore
     if (tile.getAttribute('data-done')) {
         return;

@@ -1,11 +1,10 @@
 {
     "compilerOptions": {
-        "noImplicitAny": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true,
         "noUnusedLocals": true,
-        "strictNullChecks": true,
-        "target": "es5"
+        "strict": true,
+        "target": "ES2022",
+        "moduleResolution": "node"
     },
     "include": ["source"]
 }
