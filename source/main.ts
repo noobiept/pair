@@ -4,6 +4,7 @@ import { Config, PartialConfig } from './types';
 import * as Menu from './menu';
 import * as Message from './message';
 import * as Dialog from './dialog';
+import { Game } from './game';
 
 import './style.css';
 
@@ -32,10 +33,6 @@ const IMAGES = [
     'strawberry.png',
     'watermelon.png',
 ];
-let SELECTED1: HTMLElement | null = null;
-let SELECTED2: HTMLElement | null = null;
-let MATCHED_TILES = 0;
-let GUESSES_COUNT = 0;
 
 const DEFAULT_CONFIG: Config = {
     columns: 6,
@@ -47,6 +44,8 @@ let CONFIG: Config = {
     lines: 0,
     imagesUsed: 0,
 };
+
+let GAME: Game | null = null;
 
 /**
  * Runs once at the start of the game.
@@ -86,6 +85,22 @@ function newGame(config: Config) {
     }
 
     CONFIG = config;
+    GAME = new Game({
+        config,
+        onPairGuess: (guessesCount) => {
+            Menu.updateGuesses(guessesCount);
+        },
+        onEnd: (score, guessesCount) => {
+            HighScore.add(config, score);
+            Dialog.show(
+                `Game Over!`,
+                `Total Pairs: ${totalPairs}<br />Guesses: ${guessesCount}<br />Score: ${score}%`,
+                function () {
+                    restartGame();
+                }
+            );
+        },
+    });
 
     // create the tiles
     const pairsPerImage = Math.floor(totalPairs / imagesUsed);
@@ -148,10 +163,7 @@ function adjustContainerWidth(
  * Clear the game elements.
  */
 function clearGame() {
-    SELECTED1 = null;
-    SELECTED2 = null;
-    MATCHED_TILES = 0;
-    GUESSES_COUNT = 0;
+    GAME = null;
     Menu.updateGuesses(0);
 
     while (CONTAINER.lastElementChild) {
@@ -210,94 +222,8 @@ function createTile(name: string) {
     tile.appendChild(back);
     tile.appendChild(front);
     tile.onmousedown = () => {
-        tileSelected(tile);
+        GAME?.tileSelected(tile);
     };
 
     return tile;
-}
-
-/**
- * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
- */
-function tileSelected(tile: HTMLElement) {
-    // already was matched so can't be used anymore
-    if (tile.getAttribute('data-done')) {
-        return;
-    }
-
-    // don't allow the same tile to be selected again
-    if (tile === SELECTED1 || tile === SELECTED2) {
-        return;
-    }
-
-    if (!SELECTED1) {
-        SELECTED1 = tile;
-        tile.classList.add('showTile');
-    } else if (!SELECTED2) {
-        SELECTED2 = tile;
-        tile.classList.add('showTile');
-
-        // a guess was made (2 tiles selected)
-        GUESSES_COUNT++;
-        Menu.updateGuesses(GUESSES_COUNT);
-
-        // correct guess
-        if (
-            SELECTED1.getAttribute('data-id') === tile.getAttribute('data-id')
-        ) {
-            SELECTED1.setAttribute('data-done', '1'); // so we can ignore them later on
-            SELECTED2.setAttribute('data-done', '1');
-
-            const selected1 = SELECTED1;
-            const selected2 = SELECTED2;
-            SELECTED2.addEventListener(
-                'transitionend',
-                () => {
-                    selected1.classList.add('correctGuess');
-                    selected2.classList.add('correctGuess');
-                },
-                { once: true }
-            );
-            SELECTED1 = null;
-            SELECTED2 = null;
-
-            MATCHED_TILES += 2;
-
-            const totalTiles = CONFIG.columns * CONFIG.lines;
-
-            // game over (all tiles matched)
-            if (MATCHED_TILES >= totalTiles) {
-                const totalPairs = totalTiles / 2;
-                const score = Math.round((totalPairs / GUESSES_COUNT) * 100);
-
-                HighScore.add(CONFIG, score);
-                Dialog.show(
-                    `Game Over!`,
-                    `Total Pairs: ${totalPairs}<br />Guesses: ${GUESSES_COUNT}<br />Score: ${score}%`,
-                    function () {
-                        restartGame();
-                    }
-                );
-            }
-        } else {
-            tile.addEventListener('transitionend', invalidMatch, {
-                once: true,
-            });
-        }
-    }
-}
-
-/**
- * A match was deemed invalid. Hide both tiles and reset the selection.
- */
-function invalidMatch() {
-    if (SELECTED1) {
-        SELECTED1.classList.remove('showTile');
-        SELECTED1 = null;
-    }
-
-    if (SELECTED2) {
-        SELECTED2.classList.remove('showTile');
-        SELECTED2 = null;
-    }
 }
