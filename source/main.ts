@@ -1,10 +1,11 @@
 import * as Utilities from '@drk4/utilities';
 import * as HighScore from './high-score';
-import { Config, PartialConfig } from './types';
+import { Config, PartialConfig, Tile } from './types';
 import * as Menu from './menu';
 import * as Message from './message';
 import * as Dialog from './dialog';
 import { Game } from './game';
+import { TileImpl } from './tile';
 
 import './style.css';
 
@@ -106,21 +107,40 @@ function newGame(config: Config) {
     const pairsPerImage = Math.floor(totalPairs / imagesUsed);
     let extraPairs = totalPairs % imagesUsed;
     const imagesCopy = IMAGES.slice();
-    const tiles = [];
+    const tiles: Tile[] = [];
+    const onClick = (tile: Tile) => {
+        GAME?.tileSelected(tile);
+    };
 
     for (let a = 0; a < imagesUsed; a++) {
         const imageName = removeRandomElement(imagesCopy);
 
         for (let b = 0; b < pairsPerImage; b++) {
             // need to add a pair each time
-            tiles.push(createTile(imageName));
-            tiles.push(createTile(imageName));
+            tiles.push(
+                new TileImpl({
+                    name: imageName,
+                    onClick,
+                }),
+                new TileImpl({
+                    name: imageName,
+                    onClick,
+                })
+            );
         }
 
         // add an extra pair until there are no more extra
         if (extraPairs > 0) {
-            tiles.push(createTile(imageName));
-            tiles.push(createTile(imageName));
+            tiles.push(
+                new TileImpl({
+                    name: imageName,
+                    onClick,
+                }),
+                new TileImpl({
+                    name: imageName,
+                    onClick,
+                })
+            );
             extraPairs--;
         }
     }
@@ -133,7 +153,8 @@ function newGame(config: Config) {
         lineContainer.className = 'lineContainer';
 
         for (let column = 0; column < columnCount; column++) {
-            lineContainer.appendChild(tiles[line * columnCount + column]);
+            const tile = tiles[line * columnCount + column];
+            tile.appendTo(lineContainer);
         }
 
         CONTAINER.appendChild(lineContainer);
@@ -143,7 +164,7 @@ function newGame(config: Config) {
     const score = HighScore.get(config);
     Menu.updateHighScore(score);
 
-    adjustContainerWidth(document.body, columnCount, tiles[0]);
+    adjustContainerWidth(document.body, columnCount, tiles[0].getWidth());
 }
 
 /**
@@ -152,10 +173,8 @@ function newGame(config: Config) {
 function adjustContainerWidth(
     container: HTMLElement,
     columnCount: number,
-    tile: HTMLElement
+    tileWidth: number
 ) {
-    const tileMargin = 20;
-    const tileWidth = tile.clientWidth + tileMargin;
     container.style.minWidth = columnCount * tileWidth + 'px';
 }
 
@@ -201,29 +220,4 @@ function removeRandomElement<T>(array: T[]): T {
     const position = Utilities.getRandomInt(0, array.length - 1);
 
     return array.splice(position, 1)[0];
-}
-
-/**
- * Create a tile element.
- */
-function createTile(name: string) {
-    const front = document.createElement('img');
-    front.src = 'images/' + name;
-    front.className = 'frontTile';
-
-    const back = document.createElement('img');
-    back.src = 'images/tile_aqua.png';
-    back.className = 'backTile';
-
-    const tile = document.createElement('div');
-    tile.className = 'tile';
-    tile.setAttribute('data-id', name);
-
-    tile.appendChild(back);
-    tile.appendChild(front);
-    tile.onmousedown = () => {
-        GAME?.tileSelected(tile);
-    };
-
-    return tile;
 }

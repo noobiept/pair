@@ -6,3 +6,16 @@ export interface Config {
 }
 
 export type PartialConfig = Partial<Config>;
+
+export interface Tile {
+    isAlreadyMatched(): boolean;
+    show(): void;
+    hide(): void;
+    markAsMatched(): void;
+    getDataID(): string | null;
+    animateCorrectGuess(other: Tile, onEnd?: () => void): void;
+    animateIncorrectGuess(other: Tile, onEnd?: () => void): void;
+    correctGuess(): void;
+    appendTo(container: HTMLElement): void;
+    getWidth(): number;
+}

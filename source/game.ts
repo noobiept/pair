@@ -1,4 +1,4 @@
-import { Config } from './types';
+import { Config, Tile } from './types';
 
 interface GameArgs {
     config: Config;
@@ -7,8 +7,8 @@ interface GameArgs {
 }
 
 export class Game {
-    private selected1: HTMLElement | null = null;
-    private selected2: HTMLElement | null = null;
+    private selected1: Tile | null = null;
+    private selected2: Tile | null = null;
     private matchedTiles = 0;
     private guessesCount = 0;
     private config: Config;
@@ -24,9 +24,9 @@ export class Game {
     /**
      * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
      */
-    tileSelected(tile: HTMLElement) {
+    tileSelected(tile: Tile) {
         // already was matched so can't be used anymore
-        if (tile.getAttribute('data-done')) {
+        if (tile.isAlreadyMatched()) {
             return;
         }
 
@@ -37,10 +37,10 @@ export class Game {
 
         if (!this.selected1) {
             this.selected1 = tile;
-            tile.classList.add('showTile');
+            tile.show();
         } else if (!this.selected2) {
             this.selected2 = tile;
-            tile.classList.add('showTile');
+            tile.show();
 
             const selected1 = this.selected1;
             const selected2 = this.selected2;
@@ -50,21 +50,9 @@ export class Game {
             this.onPairGuess(this.guessesCount);
 
             // correct guess
-            if (
-                selected1.getAttribute('data-id') ===
-                tile.getAttribute('data-id')
-            ) {
-                selected1.setAttribute('data-done', '1'); // so we can ignore them later on
-                selected2.setAttribute('data-done', '1');
+            if (selected1.getDataID() === tile.getDataID()) {
+                selected2.animateCorrectGuess(selected1);
 
-                selected2.addEventListener(
-                    'transitionend',
-                    () => {
-                        selected1.classList.add('correctGuess');
-                        selected2.classList.add('correctGuess');
-                    },
-                    { once: true }
-                );
                 this.selected1 = null;
                 this.selected2 = null;
 
@@ -83,29 +71,12 @@ export class Game {
                     this.onEnd(score, this.guessesCount);
                 }
             } else {
-                tile.addEventListener(
-                    'transitionend',
-                    () => this.invalidMatch(),
-                    {
-                        once: true,
-                    }
-                );
+                // A match was deemed invalid. Hide both tiles and reset the selection.
+                selected2.animateIncorrectGuess(selected1, () => {
+                    this.selected1 = null;
+                    this.selected2 = null;
+                });
             }
-        }
-    }
-
-    /**
-     * A match was deemed invalid. Hide both tiles and reset the selection.
-     */
-    private invalidMatch() {
-        if (this.selected1) {
-            this.selected1.classList.remove('showTile');
-            this.selected1 = null;
-        }
-
-        if (this.selected2) {
-            this.selected2.classList.remove('showTile');
-            this.selected2 = null;
         }
     }
 }
