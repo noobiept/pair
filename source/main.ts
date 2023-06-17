@@ -127,6 +127,21 @@ function newGame(config: Config) {
     // update the high-score
     const score = HighScore.get(config);
     Menu.updateHighScore(score);
+
+    adjustContainerWidth(document.body, columnCount, tiles[0]);
+}
+
+/**
+ * Set a minimum width of the container so it doesn't ruin the grid as the view is resized.
+ */
+function adjustContainerWidth(
+    container: HTMLElement,
+    columnCount: number,
+    tile: HTMLElement
+) {
+    const tileMargin = 20;
+    const tileWidth = tile.clientWidth + tileMargin;
+    container.style.minWidth = columnCount * tileWidth + 'px';
 }
 
 /**

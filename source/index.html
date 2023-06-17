@@ -3,41 +3,47 @@
     <head>
         <meta charset="utf-8" />
         <title>Pair Game</title>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"
+        />
     </head>
     <body>
         <div id="Container"></div>
-        <div>
-            <div id="MessageContainer"></div>
+        <div id="MessageContainer"></div>
+        <div id="DialogOverlay" class="hidden"></div>
+        <div id="Dialog" class="hidden">
+            <div id="DialogTitle"></div>
+            <div id="DialogBody"></div>
+            <hr />
+            <button id="DialogRestart">Restart</button>
+        </div>
 
-            <div id="DialogOverlay" class="hidden"></div>
-            <div id="Dialog" class="hidden">
-                <div id="DialogTitle"></div>
-                <div id="DialogBody"></div>
-                <hr />
-                <button id="DialogRestart">Restart</button>
-            </div>
-
-            <div>High-score: <span id="HighScore"></span></div>
+        <div id="GameValues">
+            <div>High-score: <span id="HighScore" class="value"></span></div>
 
             <div>
-                <span>Guesses: <span id="GuessesCount">0</span></span>
+                <span
+                    >Guesses:
+                    <span id="GuessesCount" class="value">0</span></span
+                >
             </div>
+        </div>
 
-            <div id="Menu">
-                <span>Columns:</span>
-                <span id="ColumnsValue"></span>
-                <input id="Columns" type="range" min="4" max="10" />
+        <div id="Menu">
+            <span>Columns:</span>
+            <span id="ColumnsValue"></span>
+            <input id="Columns" type="range" min="4" max="10" />
 
-                <span>Lines</span>
-                <span id="LinesValue"></span>
-                <input id="Lines" type="range" min="4" max="10" />
+            <span>Lines</span>
+            <span id="LinesValue"></span>
+            <input id="Lines" type="range" min="4" max="10" />
 
-                <span>Images used</span>
-                <span id="ImagesUsedValue"></span>
-                <input id="ImagesUsed" type="range" min="1" max="20" />
+            <span>Images used</span>
+            <span id="ImagesUsedValue"></span>
+            <input id="ImagesUsed" type="range" min="1" max="20" />
 
-                <button id="Restart">Restart</button>
-            </div>
+            <button id="Restart">Restart</button>
         </div>
     </body>
 </html>

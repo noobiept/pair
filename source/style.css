@@ -15,7 +15,8 @@ body {
 /* --- Game/tile related --- */
 
 #Container {
-    margin: 10px;
+    margin: 16px;
+    margin-top: 56px;
 }
 
 .lineContainer {
@@ -32,6 +33,10 @@ body {
     transition-duration: 0.5s;
     transform-style: preserve-3d;
     margin: 0 2px;
+}
+
+.tile:not([data-done]) {
+    cursor: pointer;
 }
 
 .frontTile,
@@ -143,10 +148,28 @@ body {
 /* --- Menu --- */
 
 #Menu {
-    margin-bottom: 10px;
+    padding: 16px;
 }
 
 #Menu input,
 #Menu button {
     vertical-align: middle;
+}
+
+/* --- Game Values --- */
+
+#GameValues {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.value {
+    color: rgb(7, 95, 7);
+    font-weight: bold;
 }
