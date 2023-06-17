@@ -6,10 +6,12 @@ import * as Message from './message';
 import * as Dialog from './dialog';
 import { Game } from './game';
 import { TileImpl } from './tile';
+import { IMAGES } from './constants';
+import { adjustContainerWidth, removeRandomElement } from './utilities';
 
 import './style.css';
-import { IMAGES } from './constants';
 
+// start of the app
 window.onload = init;
 
 let CONTAINER: HTMLElement;
@@ -147,17 +149,6 @@ function newGame(config: Config) {
 }
 
 /**
- * Set a minimum width of the container so it doesn't ruin the grid as the view is resized.
- */
-function adjustContainerWidth(
-    container: HTMLElement,
-    columnCount: number,
-    tileWidth: number
-) {
-    container.style.minWidth = columnCount * tileWidth + 'px';
-}
-
-/**
  * Clear the game elements.
  */
 function clearGame() {
@@ -190,13 +181,4 @@ export function restartGame(newConfig?: PartialConfig) {
 
     newGame(CONFIG);
     Message.show('Restart');
-}
-
-/**
- * Remove a random element from the given array.
- */
-function removeRandomElement<T>(array: T[]): T {
-    const position = Utilities.getRandomInt(0, array.length - 1);
-
-    return array.splice(position, 1)[0];
 }
