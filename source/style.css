@@ -75,7 +75,6 @@ body {
 
 .correctGuess {
     animation: correct;
-    animation-delay: 0.3s; /* wait for the tile flip animation to end first */
     animation-timing-function: ease;
     animation-duration: 0.3s;
 }

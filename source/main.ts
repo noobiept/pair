@@ -232,8 +232,17 @@ function tileSelected(tile: HTMLElement) {
         ) {
             SELECTED1.setAttribute('data-done', '1'); // so we can ignore them later on
             SELECTED2.setAttribute('data-done', '1');
-            SELECTED1.classList.add('correctGuess');
-            SELECTED2.classList.add('correctGuess');
+
+            const selected1 = SELECTED1;
+            const selected2 = SELECTED2;
+            SELECTED2.addEventListener(
+                'transitionend',
+                () => {
+                    selected1.classList.add('correctGuess');
+                    selected2.classList.add('correctGuess');
+                },
+                { once: true }
+            );
             SELECTED1 = null;
             SELECTED2 = null;
 
@@ -256,7 +265,9 @@ function tileSelected(tile: HTMLElement) {
                 );
             }
         } else {
-            tile.addEventListener('transitionend', invalidMatch);
+            tile.addEventListener('transitionend', invalidMatch, {
+                once: true,
+            });
         }
     }
 }
@@ -272,7 +283,6 @@ function invalidMatch() {
 
     if (SELECTED2) {
         SELECTED2.classList.remove('showTile');
-        SELECTED2.removeEventListener('transitionend', invalidMatch);
         SELECTED2 = null;
     }
 }
