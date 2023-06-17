@@ -1,3 +1,5 @@
+import { IMAGES } from './constants';
+
 // values used to start a new game
 export interface Config {
     columns: number;
@@ -19,3 +21,5 @@ export interface Tile {
     appendTo(container: HTMLElement): void;
     getWidth(): number;
 }
+
+export type ImageName = (typeof IMAGES)[number];

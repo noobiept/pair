@@ -8,32 +8,11 @@ import { Game } from './game';
 import { TileImpl } from './tile';
 
 import './style.css';
+import { IMAGES } from './constants';
 
 window.onload = init;
 
 let CONTAINER: HTMLElement;
-const IMAGES = [
-    'banana.png',
-    'black-berry-dark.png',
-    'black-berry-light.png',
-    'black-cherry.png',
-    'coconut.png',
-    'green-apple.png',
-    'green-grape.png',
-    'lemon.png',
-    'lime.png',
-    'orange.png',
-    'peach.png',
-    'pear.png',
-    'plum.png',
-    'raspberry.png',
-    'red-apple.png',
-    'red-cherry.png',
-    'red-grape.png',
-    'star-fruit.png',
-    'strawberry.png',
-    'watermelon.png',
-];
 
 const DEFAULT_CONFIG: Config = {
     columns: 6,

@@ -1,7 +1,7 @@
-import { Tile } from './types';
+import { ImageName, Tile } from './types';
 
 interface TileArgs {
-    name: string;
+    name: ImageName;
     onClick: (tile: Tile) => void;
 }
 
