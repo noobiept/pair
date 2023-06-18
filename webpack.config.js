@@ -12,6 +12,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, `release/pair ${package.version}`),
+        clean: true,
     },
     module: {
         rules: [
