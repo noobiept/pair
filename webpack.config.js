@@ -2,6 +2,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
+
 const path = require('path');
 const package = require('./package.json');
 
@@ -35,6 +37,9 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({
             template: './source/index.html',
+        }),
+        new CopyPlugin({
+            patterns: [{ from: 'source/images', to: 'images' }],
         }),
         new CircularDependencyPlugin({
             // exclude detection of files based on a RegExp
