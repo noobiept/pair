@@ -2,7 +2,7 @@
 
 Match identical tiles with each other, to make a pair. Find all the pairs to win the game.
 
-![Screenshot](source/images/screenshot.png)
+![Screenshot](screenshot.png)
 
 # Development
 
