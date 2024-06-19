@@ -15,7 +15,7 @@ export function removeRandomElement<T>(array: T[]): T {
 export function adjustContainerWidth(
     container: HTMLElement,
     columnCount: number,
-    tileWidth: number
+    tileWidth: number,
 ) {
     container.style.minWidth = columnCount * tileWidth + 'px';
 }

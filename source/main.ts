@@ -57,7 +57,7 @@ function newGame(config: Config) {
 
     if (totalTiles % 2 !== 0) {
         throw new Error(
-            `Total number of tiles needs to be an even number. -- columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles}`
+            `Total number of tiles needs to be an even number. -- columnCount: ${columnCount} / lineCount: ${lineCount} / total (column * line): ${totalTiles}`,
         );
     }
 
@@ -79,7 +79,7 @@ function newGame(config: Config) {
                 `Total Pairs: ${totalPairs}<br />Guesses: ${guessesCount}<br />Score: ${score}%`,
                 function () {
                     restartGame();
-                }
+                },
             );
         },
     });
@@ -106,7 +106,7 @@ function newGame(config: Config) {
                 new TileImpl({
                     name: imageName,
                     onClick,
-                })
+                }),
             );
         }
 
@@ -120,7 +120,7 @@ function newGame(config: Config) {
                 new TileImpl({
                     name: imageName,
                     onClick,
-                })
+                }),
             );
             extraPairs--;
         }

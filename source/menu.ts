@@ -26,7 +26,7 @@ export function init({ config, restartGame }: MenuArgs) {
     // columns
     const columns = document.getElementById('Columns') as HTMLInputElement;
     const columnsValue = document.getElementById(
-        'ColumnsValue'
+        'ColumnsValue',
     ) as HTMLSpanElement;
 
     columns.valueAsNumber = config.columns;
@@ -74,10 +74,10 @@ export function init({ config, restartGame }: MenuArgs) {
 
     // images used
     const imagesUsed = document.getElementById(
-        'ImagesUsed'
+        'ImagesUsed',
     ) as HTMLInputElement;
     const imagesUsedValue = document.getElementById(
-        'ImagesUsedValue'
+        'ImagesUsedValue',
     ) as HTMLSpanElement;
 
     imagesUsed.valueAsNumber = config.imagesUsed;

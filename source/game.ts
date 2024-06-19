@@ -65,7 +65,7 @@ export class Game {
                 if (this.matchedTiles >= totalTiles) {
                     const totalPairs = totalTiles / 2;
                     const score = Math.round(
-                        (totalPairs / this.guessesCount) * 100
+                        (totalPairs / this.guessesCount) * 100,
                     );
 
                     this.onEnd(score, this.guessesCount);

@@ -72,7 +72,7 @@ export class TileImpl implements Tile {
                 other.correctGuess();
                 onEnd?.();
             },
-            { once: true }
+            { once: true },
         );
     }
 
@@ -86,7 +86,7 @@ export class TileImpl implements Tile {
             },
             {
                 once: true,
-            }
+            },
         );
     }
 }

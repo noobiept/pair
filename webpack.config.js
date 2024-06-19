@@ -1,17 +1,17 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CircularDependencyPlugin = require('circular-dependency-plugin');
-const CopyPlugin = require('copy-webpack-plugin');
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import CircularDependencyPlugin from 'circular-dependency-plugin';
+import CopyPlugin from 'copy-webpack-plugin';
 
-const path = require('path');
-const package = require('./package.json');
+import path from 'path';
+import packageInfo from './package.json' with { type: 'json' };
 
-module.exports = {
+const __dirname = import.meta.dirname;
+
+export default {
     entry: './source/main.ts',
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, `release/pair ${package.version}`),
+        path: path.resolve(__dirname, `release/pair ${packageInfo.version}`),
         clean: true,
     },
     module: {
