@@ -1,8 +1,11 @@
 import eslint from '@eslint/js';
 import globals from 'globals';
+import tsEslint from 'typescript-eslint';
 
 export default [
-    eslint.configs.recommended,
+    {
+        ignores: ['release/', 'webpack.config.js'],
+    },
     {
         languageOptions: {
             globals: {
@@ -10,7 +13,6 @@ export default [
             },
         },
     },
-    {
-        ignores: ['release/', 'webpack.config.js'],
-    },
+    eslint.configs.recommended,
+    ...tsEslint.configs.recommended,
 ];
