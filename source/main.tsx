@@ -10,9 +10,17 @@ import { IMAGES } from './constants';
 import { adjustContainerWidth, removeRandomElement } from './utilities';
 
 import './style.css';
+import { useEffect } from 'react';
 
-// start of the app
-window.onload = init;
+export function Main() {
+    useEffect(() => {
+        init();
+    }, []);
+
+    return <div />;
+}
+
+// ---------------
 
 let CONTAINER: HTMLElement;
 
