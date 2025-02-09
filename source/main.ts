@@ -1,4 +1,4 @@
-import * as Utilities from '@drk4/utilities';
+import { shuffle } from '@drk4/utilities';
 import * as HighScore from './high-score';
 import { Config, PartialConfig, Tile } from './types';
 import * as Menu from './menu';
@@ -126,7 +126,7 @@ function newGame(config: Config) {
         }
     }
 
-    Utilities.shuffle(tiles);
+    shuffle(tiles);
 
     // add to the game
     for (let line = 0; line < lineCount; line++) {
