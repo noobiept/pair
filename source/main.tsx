@@ -1,6 +1,5 @@
 import { shuffle } from '@drk4/utilities';
 import * as HighScore from './high-score';
-import * as Menu from './menu';
 import * as Message from './message';
 import * as Dialog from './dialog';
 import { Game } from './game';
@@ -11,12 +10,10 @@ import { gridAtom, type GridPosition } from './modules/grid';
 import './style.css';
 import { useEffect } from 'react';
 import { Tile } from './components/tile';
-import {
-    DEFAULT_CONFIG,
-    type Config,
-    type PartialConfig,
-} from './modules/config';
+import { type Config, type PartialConfig } from './modules/config';
 import { useAtomValue } from 'jotai';
+import { BottomMenu } from './components/bottom-menu';
+import { TopMenu } from './components/top-menu';
 
 export function Main() {
     useEffect(() => {
@@ -26,15 +23,19 @@ export function Main() {
     const gridData = useAtomValue(gridAtom);
 
     return (
-        <div id="Container">
-            {gridData.map((row, line) => (
-                <div className="lineContainer" key={line}>
-                    {row.map((position, column) => (
-                        <Tile key={column} {...position} />
-                    ))}
-                </div>
-            ))}
-        </div>
+        <>
+            <TopMenu />
+            <div id="Container">
+                {gridData.map((row, line) => (
+                    <div className="lineContainer" key={line}>
+                        {row.map((position, column) => (
+                            <Tile key={column} {...position} />
+                        ))}
+                    </div>
+                ))}
+            </div>
+            <BottomMenu />
+        </>
     );
 }
 
@@ -57,10 +58,6 @@ export function init() {
     CONTAINER = document.getElementById('Container') as HTMLElement; // TODO
 
     HighScore.init();
-    Menu.init({
-        config: DEFAULT_CONFIG, // TODO
-        restartGame: (config) => restartGame(config),
-    });
     Message.init();
     Dialog.init();
 }
@@ -90,7 +87,7 @@ export function newGame(config: Config) {
     GAME = new Game({
         config,
         onPairGuess: (guessesCount) => {
-            Menu.updateGuesses(guessesCount);
+            // Menu.updateGuesses(guessesCount); // TODO
         },
         onEnd: (score, guessesCount) => {
             HighScore.add(config, score);
@@ -163,7 +160,7 @@ export function newGame(config: Config) {
  */
 function clearGame() {
     GAME = null;
-    Menu.updateGuesses(0);
+    // Menu.updateGuesses(0); // TODO
 
     while (CONTAINER.lastElementChild) {
         CONTAINER.removeChild(CONTAINER.lastElementChild);

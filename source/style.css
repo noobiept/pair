@@ -5,14 +5,19 @@ html {
 body {
     height: 100%;
     margin: 0;
+}
+
+/* --- Game/tile related --- */
+
+#App {
+    height: 100%;
+    margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     text-align: center;
 }
-
-/* --- Game/tile related --- */
 
 #Container {
     margin: 16px;
