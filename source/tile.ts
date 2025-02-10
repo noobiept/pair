@@ -1,11 +1,12 @@
-import { ImageName, Tile } from './types';
+import { ImageName, ITile } from './types';
 
 interface TileArgs {
     name: ImageName;
-    onClick: (tile: Tile) => void;
+    onClick: (tile: ITile) => void;
 }
 
-export class TileImpl implements Tile {
+// TODO
+export class TileImpl implements ITile {
     private tile: HTMLElement;
 
     constructor({ name, onClick }: TileArgs) {
@@ -61,7 +62,7 @@ export class TileImpl implements Tile {
         this.tile.classList.add('correctGuess');
     }
 
-    animateCorrectGuess(other: Tile, onEnd?: () => void) {
+    animateCorrectGuess(other: ITile, onEnd?: () => void) {
         this.markAsMatched(); // so we can ignore them later on
         other.markAsMatched();
 
@@ -76,7 +77,7 @@ export class TileImpl implements Tile {
         );
     }
 
-    animateIncorrectGuess(other: Tile, onEnd?: () => void) {
+    animateIncorrectGuess(other: ITile, onEnd?: () => void) {
         this.tile.addEventListener(
             'transitionend',
             () => {

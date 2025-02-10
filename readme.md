@@ -9,6 +9,7 @@ Match identical tiles with each other, to make a pair. Find all the pairs to win
 - `corepack enable`
 - `pnpm install`
 - `pnpm start`
+- `pnpm run watch`
 - `pnpm run build`
 
 # Images

@@ -1,4 +1,4 @@
-import { Config, PartialConfig } from './types';
+import type { Config, PartialConfig } from './modules/config';
 
 interface MenuArgs {
     config: Config;

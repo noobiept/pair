@@ -1,4 +1,4 @@
-import { Config } from './types';
+import type { Config } from './modules/config';
 
 interface Scores {
     [config: string]: number;

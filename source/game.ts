@@ -1,4 +1,5 @@
-import { Config, Tile } from './types';
+import type { Config } from './modules/config';
+import { ITile } from './types';
 
 interface GameArgs {
     config: Config;
@@ -7,8 +8,8 @@ interface GameArgs {
 }
 
 export class Game {
-    private selected1: Tile | null = null;
-    private selected2: Tile | null = null;
+    private selected1: ITile | null = null;
+    private selected2: ITile | null = null;
     private matchedTiles = 0;
     private guessesCount = 0;
     private config: Config;
@@ -24,7 +25,7 @@ export class Game {
     /**
      * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
      */
-    tileSelected(tile: Tile) {
+    tileSelected(tile: ITile) {
         // already was matched so can't be used anymore
         if (tile.isAlreadyMatched()) {
             return;
