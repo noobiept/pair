@@ -1,10 +1,6 @@
 import { atom } from 'jotai';
-import type { GridPosition } from './grid.types';
-import { configAtom } from '../config';
-import { newGame } from '../../main'; // TODO
+import type { GridData, GridPosition } from './grid.types';
 
-export const gridAtom = atom<GridPosition[][]>((get) => {
-    const config = get(configAtom);
+export const gridAtom = atom<GridPosition[][]>([]);
 
-    return newGame(config);
-});
+export const tilesDataAtom = atom<GridData>({});

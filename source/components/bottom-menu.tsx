@@ -1,6 +1,8 @@
 import { useAtom } from 'jotai';
 import { configAtom } from '../modules/config';
 import { useCallback } from 'react';
+import { useAtomCallback } from 'jotai/utils';
+import { newGameAtom } from '../modules/game';
 
 export function BottomMenu() {
     const [config, setConfig] = useAtom(configAtom);
@@ -49,6 +51,11 @@ export function BottomMenu() {
         },
         [],
     );
+    const onRestart = useAtomCallback(
+        useCallback((get, set) => {
+            set(newGameAtom, get(configAtom));
+        }, []),
+    );
 
     return (
         <div id="Menu">
@@ -85,7 +92,9 @@ export function BottomMenu() {
                 onChange={onImagesUsedChange}
             />
 
-            <button id="Restart">Restart</button>
+            <button id="Restart" onClick={onRestart}>
+                Restart
+            </button>
         </div>
     );
 }
