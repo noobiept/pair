@@ -3,34 +3,23 @@ import * as HighScore from './high-score';
 import { Game } from './game';
 import { IMAGES } from './constants';
 import { removeRandomElement } from './utilities';
-import { gridAtom, type GridPosition } from './modules/grid';
+import { type GridPosition } from './modules/grid';
 
 import './style.css';
-import { Tile } from './components/tile';
 import { type Config, type PartialConfig } from './modules/config';
-import { useAtomValue } from 'jotai';
 import { BottomMenu } from './components/bottom-menu';
 import { TopMenu } from './components/top-menu';
 import { Dialog } from './components/dialog';
 import { Message } from './components/message';
+import { Grid } from './components/grid';
 
 export function Main() {
-    const gridData = useAtomValue(gridAtom);
-
     return (
         <>
             <Message />
             <Dialog />
             <TopMenu />
-            <div id="Container">
-                {gridData.map((row, line) => (
-                    <div className="lineContainer" key={line}>
-                        {row.map((position, column) => (
-                            <Tile key={column} {...position} />
-                        ))}
-                    </div>
-                ))}
-            </div>
+            <Grid />
             <BottomMenu />
         </>
     );
