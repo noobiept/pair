@@ -1,29 +1,26 @@
 import { shuffle } from '@drk4/utilities';
 import * as HighScore from './high-score';
-import * as Message from './message';
-import * as Dialog from './dialog';
 import { Game } from './game';
 import { IMAGES } from './constants';
 import { removeRandomElement } from './utilities';
 import { gridAtom, type GridPosition } from './modules/grid';
 
 import './style.css';
-import { useEffect } from 'react';
 import { Tile } from './components/tile';
 import { type Config, type PartialConfig } from './modules/config';
 import { useAtomValue } from 'jotai';
 import { BottomMenu } from './components/bottom-menu';
 import { TopMenu } from './components/top-menu';
+import { Dialog } from './components/dialog';
+import { Message } from './components/message';
 
 export function Main() {
-    useEffect(() => {
-        init();
-    }, []);
-
     const gridData = useAtomValue(gridAtom);
 
     return (
         <>
+            <Message />
+            <Dialog />
             <TopMenu />
             <div id="Container">
                 {gridData.map((row, line) => (
@@ -41,8 +38,6 @@ export function Main() {
 
 // ---------------
 
-let CONTAINER: HTMLElement;
-
 let CONFIG: Config = {
     columns: 0,
     lines: 0,
@@ -50,17 +45,6 @@ let CONFIG: Config = {
 };
 
 let GAME: Game | null = null;
-
-/**
- * Runs once at the start of the game.
- */
-export function init() {
-    CONTAINER = document.getElementById('Container') as HTMLElement; // TODO
-
-    HighScore.init();
-    Message.init();
-    Dialog.init();
-}
 
 /**
  * Start a new game.
@@ -91,13 +75,14 @@ export function newGame(config: Config) {
         },
         onEnd: (score, guessesCount) => {
             HighScore.add(config, score);
-            Dialog.show(
-                `Game Over!`,
-                `Total Pairs: ${totalPairs}<br />Guesses: ${guessesCount}<br />Score: ${score}%`,
-                function () {
-                    restartGame();
-                },
-            );
+            // TODO
+            // Dialog.show(
+            //     `Game Over!`,
+            //     `Total Pairs: ${totalPairs}<br />Guesses: ${guessesCount}<br />Score: ${score}%`,
+            //     function () {
+            //         restartGame();
+            //     },
+            // );
         },
     });
 
@@ -161,10 +146,6 @@ export function newGame(config: Config) {
 function clearGame() {
     GAME = null;
     // Menu.updateGuesses(0); // TODO
-
-    while (CONTAINER.lastElementChild) {
-        CONTAINER.removeChild(CONTAINER.lastElementChild);
-    }
 }
 
 /**
@@ -187,5 +168,5 @@ export function restartGame(newConfig?: PartialConfig) {
     }
 
     newGame(CONFIG);
-    Message.show('Restart');
+    // Message.show('Restart'); // TODO
 }
