@@ -29,9 +29,12 @@ function gameReducer(state: GameState, action: GameAction) {
             }, {});
 
             return {
-                ...state,
                 tiles,
                 grid,
+                selected1: null,
+                selected2: null,
+                matchedTiles: 0,
+                guessesCount: 0,
             };
         }
 
@@ -89,3 +92,8 @@ export const newGameAtom = atom(null, (get, set, config: Config) => {
 });
 
 export const gridAtom = selectAtom(gameStateAtom, (state) => state.grid);
+
+export const guessesCountAtom = selectAtom(
+    gameStateAtom,
+    (state) => state.guessesCount,
+);
