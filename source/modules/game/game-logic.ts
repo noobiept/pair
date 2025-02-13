@@ -72,8 +72,8 @@ export function newGame(config: Config) {
     return grid;
 }
 
-function isAlreadyMatched(state: GameState, id: GridPositionId) {
-    return state.tiles[id].state === 'matched';
+function isAlreadyVisible(state: GameState, id: GridPositionId) {
+    return state.tiles[id].state === 'visible';
 }
 
 function isAMatch(state: GameState, id1: GridPositionId, id2: GridPositionId) {
@@ -84,14 +84,14 @@ function isAMatch(state: GameState, id1: GridPositionId, id2: GridPositionId) {
  * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
  */
 export function tileSelected(state: GameState, id: GridPositionId) {
-    // already was matched so can't be used anymore
-    if (isAlreadyMatched(state, id)) {
-        return {};
+    // already visible so can't be used anymore
+    if (isAlreadyVisible(state, id)) {
+        return null;
     }
 
     // don't allow the same tile to be selected again
     if (id === state.selected1 || id === state.selected2) {
-        return {};
+        return null;
     }
 
     if (!state.selected1) {
@@ -102,7 +102,7 @@ export function tileSelected(state: GameState, id: GridPositionId) {
                 ...state.tiles,
                 [id]: {
                     ...state.tiles[id],
-                    state: 'showing',
+                    state: 'visible',
                 },
             },
         };
@@ -123,11 +123,11 @@ export function tileSelected(state: GameState, id: GridPositionId) {
                     ...state.tiles,
                     [selected1]: {
                         ...state.tiles[selected1],
-                        state: 'showing', // 'matched', ?
+                        state: 'visible',
                     },
                     [selected2]: {
                         ...state.tiles[selected2],
-                        state: 'showing',
+                        state: 'visible',
                     },
                 },
                 matchedTiles: state.matchedTiles + 2,
@@ -142,7 +142,7 @@ export function tileSelected(state: GameState, id: GridPositionId) {
                     ...state.tiles,
                     [selected2]: {
                         ...state.tiles[selected2],
-                        state: 'showing',
+                        state: 'visible',
                     },
                 },
                 guessesCount,
@@ -150,5 +150,5 @@ export function tileSelected(state: GameState, id: GridPositionId) {
         }
     }
 
-    return {};
+    return null;
 }

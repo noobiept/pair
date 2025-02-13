@@ -8,6 +8,9 @@ function gameReducer(state: GameState, action: GameAction) {
     switch (action.type) {
         case 'game/select-tile': {
             const newState = tileSelected(state, action.payload.id);
+            if (!newState) {
+                return state;
+            }
 
             return {
                 ...state,

@@ -47,4 +47,4 @@ export type GridPosition = {
 
 export type GridPositionId = Opaque<string, 'grid-position-id'>;
 
-export type GridPositionState = 'hidden' | 'showing' | 'matched' | 'incorrect';
+export type GridPositionState = 'hidden' | 'visible';
