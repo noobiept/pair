@@ -2,7 +2,7 @@ import { useAtom } from 'jotai';
 import { dialogAtom } from '../modules/dialog';
 
 export function Dialog() {
-    const [dialog, setDialog] = useAtom(dialogAtom);
+    const [dialog] = useAtom(dialogAtom);
 
     if (!dialog) {
         return null;

@@ -1,20 +1,25 @@
 import { useAtomValue } from 'jotai';
-import { tilesDataAtom, type GridPosition } from '../../modules/grid';
 import { useAtomCallback } from 'jotai/utils';
 import { useCallback } from 'react';
+import { gameStateAtom, type GridPosition } from '../../modules/game';
 
 export const useTile = ({ imageName, id }: GridPosition) => {
     const front = 'images/' + imageName;
-    const state = useAtomValue(tilesDataAtom)[id];
+    const game = useAtomValue(gameStateAtom);
+    const state = game.tiles[id].state;
+
     const onClick = useAtomCallback(
-        useCallback((get, set) => {
-            set(tilesDataAtom, (prev) => {
-                return {
-                    ...prev,
-                    [id]: state === 'hidden' ? 'showing' : 'hidden',
-                };
-            });
-        }, []),
+        useCallback(
+            (get, set) => {
+                set(gameStateAtom, {
+                    type: 'game/select-tile',
+                    payload: {
+                        id,
+                    },
+                });
+            },
+            [id],
+        ),
     );
 
     return {

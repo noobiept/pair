@@ -1,8 +1,8 @@
 import { shuffle } from '@drk4/utilities';
-import type { GridPosition, GridPositionId } from '../grid';
 import { removeRandomElement } from '../../utilities';
 import type { Config } from '../config';
-import { IMAGES } from '../../constants';
+import type { GameState, GridPosition, GridPositionId } from './game.types';
+import { IMAGES } from '../images';
 
 /**
  * Start a new game.
@@ -70,4 +70,85 @@ export function newGame(config: Config) {
     }
 
     return grid;
+}
+
+function isAlreadyMatched(state: GameState, id: GridPositionId) {
+    return state.tiles[id].state === 'matched';
+}
+
+function isAMatch(state: GameState, id1: GridPositionId, id2: GridPositionId) {
+    return state.tiles[id1].imageName === state.tiles[id2].imageName;
+}
+
+/**
+ * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
+ */
+export function tileSelected(state: GameState, id: GridPositionId) {
+    // already was matched so can't be used anymore
+    if (isAlreadyMatched(state, id)) {
+        return {};
+    }
+
+    // don't allow the same tile to be selected again
+    if (id === state.selected1 || id === state.selected2) {
+        return {};
+    }
+
+    if (!state.selected1) {
+        return {
+            ...state,
+            selected1: id,
+            tiles: {
+                ...state.tiles,
+                [id]: {
+                    ...state.tiles[id],
+                    state: 'showing',
+                },
+            },
+        };
+    } else if (!state.selected2) {
+        const selected1 = state.selected1;
+        const selected2 = id;
+
+        // a guess was made (2 tiles selected)
+        const guessesCount = state.guessesCount + 1;
+
+        // correct guess
+        if (isAMatch(state, selected1, selected2)) {
+            return {
+                ...state,
+                selected1: null,
+                selected2: null,
+                tiles: {
+                    ...state.tiles,
+                    [selected1]: {
+                        ...state.tiles[selected1],
+                        state: 'showing', // 'matched', ?
+                    },
+                    [selected2]: {
+                        ...state.tiles[selected2],
+                        state: 'showing',
+                    },
+                },
+                matchedTiles: state.matchedTiles + 2,
+                guessesCount,
+            };
+            // invalid match
+        } else {
+            return {
+                ...state,
+                selected2: id,
+                tiles: {
+                    ...state.tiles,
+                    [selected2]: {
+                        ...state.tiles[selected2],
+                        state: 'showing',
+                    },
+                },
+                guessesCount,
+            };
+        }
+    }
+
+    return {};
 }
