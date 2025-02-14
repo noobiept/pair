@@ -73,7 +73,7 @@ export function newGame(config: Config) {
 }
 
 function isAlreadyVisible(state: GameState, id: GridPositionId) {
-    return state.tiles[id].state === 'visible';
+    return state.tiles[id].state !== 'hidden';
 }
 
 function isAMatch(state: GameState, id1: GridPositionId, id2: GridPositionId) {
@@ -84,7 +84,7 @@ function isAMatch(state: GameState, id1: GridPositionId, id2: GridPositionId) {
  * A Tile was selected (clicked on). If its the first one being selected keep track of it, otherwise compare with the previously selected tile to see if its a match.
  */
 export function tileSelected(state: GameState, id: GridPositionId) {
-    // already visible so can't be used anymore
+    // already visible/matched so can't be used anymore
     if (isAlreadyVisible(state, id)) {
         return null;
     }
@@ -123,11 +123,11 @@ export function tileSelected(state: GameState, id: GridPositionId) {
                     ...state.tiles,
                     [selected1]: {
                         ...state.tiles[selected1],
-                        state: 'visible',
+                        state: 'matched',
                     },
                     [selected2]: {
                         ...state.tiles[selected2],
-                        state: 'visible',
+                        state: 'matched',
                     },
                 },
                 matchedTiles: state.matchedTiles + 2,

@@ -11,7 +11,13 @@ export function Tile(props: TileProps) {
         <div
             data-id={props.imageName}
             onClick={onClick}
-            className={clsx(['tile', state === 'visible' ? 'showTile' : ''])}
+            className={clsx([
+                'tile',
+                {
+                    showTile: state === 'visible',
+                    correctGuess: state === 'matched',
+                },
+            ])}
         >
             <img src={front} className="frontTile" />
             <img src="images/tile_aqua.png" className="backTile" />
