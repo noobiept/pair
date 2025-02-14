@@ -13,7 +13,7 @@ export function TopMenu() {
             <div>
                 <span>High-score:</span>
                 <span id="HighScore" className="value">
-                    {highScore}
+                    {highScore ? `${highScore}%` : '--'}
                 </span>
             </div>
 

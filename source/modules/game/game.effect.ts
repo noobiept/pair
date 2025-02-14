@@ -1,16 +1,20 @@
 import { atomEffect } from 'jotai-effect';
 import { gameStateAtom } from './game.atom';
 import { configAtom } from '../config';
+import { dialogAtom } from '../dialog';
+import { calcScore, isGameOver } from './game-logic';
+import { allHighScoresAtom, getKey, highScoreAtom } from '../high-score';
 
 export const gameEffect = atomEffect((get, set) => {
     const game = get(gameStateAtom);
+    const config = get(configAtom);
     let index = -1;
 
     if (game.grid.length === 0) {
         set(gameStateAtom, {
             type: 'game/reset-grid',
             payload: {
-                config: get(configAtom),
+                config,
             },
         });
     }
@@ -22,6 +26,36 @@ export const gameEffect = atomEffect((get, set) => {
                 type: 'game/reset-selection',
             });
         }, 500);
+    }
+
+    // when the game is over, show a dialog
+    if (isGameOver(game, config)) {
+        const score = calcScore(game, config);
+        set(allHighScoresAtom, {
+            ...get(allHighScoresAtom),
+            [getKey(config)]: Math.max(
+                score,
+                get(highScoreAtom(getKey(config))),
+            ),
+        });
+        set(dialogAtom, {
+            title: 'Congratulations!',
+            body: `You have won the game! Score: ${score}%`,
+            buttons: [
+                {
+                    text: 'Restart',
+                    action: () => {
+                        set(gameStateAtom, {
+                            type: 'game/reset-grid',
+                            payload: {
+                                config,
+                            },
+                        });
+                        set(dialogAtom, undefined);
+                    },
+                },
+            ],
+        });
     }
 
     return () => {

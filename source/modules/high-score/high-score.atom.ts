@@ -11,7 +11,7 @@ export const allHighScoresAtom = atomWithStorage<HighScoreData>(
 export const highScoreAtom = atomFamily((key: HighScoreKey) => {
     return atom((get) => {
         const scores = get(allHighScoresAtom);
-        return scores[key] ?? 0;
+        return scores[key];
     });
 });
 

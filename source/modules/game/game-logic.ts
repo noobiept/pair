@@ -152,3 +152,14 @@ export function tileSelected(state: GameState, id: GridPositionId) {
 
     return null;
 }
+
+export function isGameOver(game: GameState, config: Config) {
+    return game.matchedTiles >= config.columns * config.lines;
+}
+
+export function calcScore(game: GameState, config: Config) {
+    const totalPairs = (config.columns * config.lines) / 2;
+    const score = Math.round((totalPairs / game.guessesCount) * 100);
+
+    return score;
+}

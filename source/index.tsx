@@ -4,6 +4,12 @@ import { App } from './app';
 
 import './style.css';
 
+declare global {
+    interface SymbolConstructor {
+        readonly observable: symbol;
+    }
+}
+
 const root = createRoot(document.getElementById('App')!);
 root.render(
     <StrictMode>

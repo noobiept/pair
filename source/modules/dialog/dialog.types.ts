@@ -1,5 +1,10 @@
+export type DialogButton = {
+    text: string;
+    action: () => void;
+};
+
 export type DialogState = {
     title: string;
     body: string;
-    visible: boolean;
+    buttons: DialogButton[];
 };
