@@ -1,5 +1,8 @@
-import { atom } from 'jotai';
 import { DEFAULT_CONFIG } from './config.const';
 import { Config } from './config.types';
+import { atomWithStorage } from 'jotai/utils';
 
-export const configAtom = atom<Config>(DEFAULT_CONFIG);
+export const configAtom = atomWithStorage<Config>(
+    'pair_config',
+    DEFAULT_CONFIG,
+);

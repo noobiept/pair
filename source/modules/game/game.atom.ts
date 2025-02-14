@@ -1,6 +1,4 @@
-import { atom } from 'jotai';
 import { atomWithReducer, selectAtom } from 'jotai/utils';
-import { configAtom, type Config } from '../config';
 import { newGame, tileSelected } from './game-logic';
 import type { GameAction, GameState, TilesData } from './game.types';
 
@@ -80,16 +78,6 @@ export const gameStateAtom = atomWithReducer<GameState, GameAction>(
     },
     gameReducer,
 );
-
-export const newGameAtom = atom(null, (get, set, config: Config) => {
-    set(configAtom, config);
-    set(gameStateAtom, {
-        type: 'game/reset-grid',
-        payload: {
-            config,
-        },
-    });
-});
 
 export const gridAtom = selectAtom(gameStateAtom, (state) => state.grid);
 
