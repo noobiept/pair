@@ -1,4 +1,5 @@
 import type { Opaque } from 'ts-essentials';
+
 import type { Config } from '../config';
 
 export type TilesData = {

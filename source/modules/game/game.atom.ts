@@ -1,6 +1,7 @@
 import { atomWithReducer, selectAtom } from 'jotai/utils';
-import { newGame, tileSelected } from './game-logic';
+
 import type { GameAction, GameState, TilesData } from './game.types';
+import { newGame, tileSelected } from './game-logic';
 
 function gameReducer(state: GameState, action: GameAction) {
     switch (action.type) {

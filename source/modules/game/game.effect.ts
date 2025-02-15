@@ -1,9 +1,10 @@
 import { atomEffect } from 'jotai-effect';
-import { gameStateAtom } from './game.atom';
+
 import { configAtom } from '../config';
 import { dialogAtom } from '../dialog';
-import { calcScore, isGameOver } from './game-logic';
 import { allHighScoresAtom, getKey, highScoreAtom } from '../high-score';
+import { gameStateAtom } from './game.atom';
+import { calcScore, isGameOver } from './game-logic';
 
 export const gameEffect = atomEffect((get, set) => {
     const game = get(gameStateAtom);

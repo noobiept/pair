@@ -1,6 +1,7 @@
 import { useAtom } from 'jotai';
-import { messageAtom } from '../modules/message';
 import { useEffect } from 'react';
+
+import { messageAtom } from '../modules/message';
 
 export function Message() {
     const [message, setMessage] = useAtom(messageAtom);

@@ -1,6 +1,7 @@
 import { clsx } from 'clsx';
-import { useTile } from './tile.hooks';
+
 import type { GridPosition } from '../../modules/game';
+import { useTile } from './tile.hooks';
 
 type TileProps = GridPosition;
 

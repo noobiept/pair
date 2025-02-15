@@ -1,8 +1,9 @@
 import { shuffle } from '@drk4/utilities';
+
 import { removeRandomElement } from '../../utilities';
 import type { Config } from '../config';
-import type { GameState, GridPosition, GridPositionId } from './game.types';
 import { IMAGES } from '../images';
+import type { GameState, GridPosition, GridPositionId } from './game.types';
 
 /**
  * Start a new game.

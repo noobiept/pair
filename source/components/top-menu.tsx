@@ -1,7 +1,8 @@
 import { useAtomValue } from 'jotai';
-import { getKey, highScoreAtom } from '../modules/high-score';
+
 import { configAtom } from '../modules/config';
 import { guessesCountAtom } from '../modules/game';
+import { getKey, highScoreAtom } from '../modules/high-score';
 
 export function TopMenu() {
     const config = useAtomValue(configAtom);

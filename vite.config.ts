@@ -1,7 +1,8 @@
-import { defineConfig } from 'vite';
-import path from 'path';
-import packageInfo from './package.json' with { type: 'json' };
 import react from '@vitejs/plugin-react';
+import path from 'path';
+import { defineConfig } from 'vite';
+
+import packageInfo from './package.json' with { type: 'json' };
 
 const __dirname = import.meta.dirname;
 

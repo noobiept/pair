@@ -1,5 +1,6 @@
 import { useAtom } from 'jotai';
 import { useCallback } from 'react';
+
 import { configAtom } from '../../modules/config';
 
 export function useBottomMenu() {
@@ -22,7 +23,7 @@ export function useBottomMenu() {
                 columns: value,
             });
         },
-        [],
+        [config, setConfig],
     );
     const onLinesChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +39,7 @@ export function useBottomMenu() {
                 lines: value,
             });
         },
-        [],
+        [config, setConfig],
     );
     const onImagesUsedChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,13 +48,13 @@ export function useBottomMenu() {
                 imagesUsed: event.target.valueAsNumber,
             });
         },
-        [],
+        [config, setConfig],
     );
     const onRestart = useCallback(() => {
         setConfig({
             ...config,
         });
-    }, []);
+    }, [config, setConfig]);
 
     return {
         config,

@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 import { useAtomCallback } from 'jotai/utils';
 import { useCallback } from 'react';
+
 import { gameStateAtom, type GridPosition } from '../../modules/game';
 
 export const useTile = ({ imageName, id }: GridPosition) => {

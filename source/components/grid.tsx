@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
-import { Tile } from './tile/tile';
+
 import { gridAtom } from '../modules/game';
+import { Tile } from './tile/tile';
 
 export function Grid() {
     const grid = useAtomValue(gridAtom);
