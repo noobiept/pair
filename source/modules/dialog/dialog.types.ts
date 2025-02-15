@@ -1,4 +1,4 @@
-export type DialogButton = {
+type DialogButton = {
     text: string;
     action: () => void;
 };

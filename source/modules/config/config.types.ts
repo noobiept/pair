@@ -4,5 +4,3 @@ export interface Config {
     lines: number;
     imagesUsed: number;
 }
-
-export type PartialConfig = Partial<Config>;

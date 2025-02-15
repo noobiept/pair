@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { useTile } from './tile.hooks';
 import type { GridPosition } from '../../modules/game';
 
-export type TileProps = GridPosition;
+type TileProps = GridPosition;
 
 export function Tile(props: TileProps) {
     const { front, onClick, state } = useTile(props);
