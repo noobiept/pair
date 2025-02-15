@@ -20,8 +20,12 @@ export function Tile(props: TileProps) {
                 },
             ])}
         >
-            <img src={front} className="frontTile" />
-            <img src="images/tile_aqua.png" className="backTile" />
+            <img src={front} className="frontTile" alt="Front tile" />
+            <img
+                src="images/tile_aqua.png"
+                className="backTile"
+                alt="Back tile"
+            />
         </div>
     );
 }

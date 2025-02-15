@@ -11,7 +11,7 @@ export function BottomMenu() {
 
     return (
         <div id="Menu">
-            <span>Columns</span>
+            <label htmlFor="Columns">Columns</label>
             <span id="ColumnsValue">{config.columns}</span>
             <input
                 id="Columns"
@@ -22,7 +22,7 @@ export function BottomMenu() {
                 onChange={onColumnsChange}
             />
 
-            <span>Lines</span>
+            <label htmlFor="Lines">Lines</label>
             <span id="LinesValue">{config.lines}</span>
             <input
                 id="Lines"
@@ -33,7 +33,7 @@ export function BottomMenu() {
                 onChange={onLinesChange}
             />
 
-            <span>Images used</span>
+            <label htmlFor="ImagesUsed">Images used</label>
             <span id="ImagesUsedValue">{config.imagesUsed}</span>
             <input
                 id="ImagesUsed"
