@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 import { atomFamily, atomWithStorage } from 'jotai/utils';
 
-import type { Config } from '../config';
+import { type Config, configAtom } from '../config';
 import type { HighScoreData, HighScoreKey } from './high-score.types';
 
 export const allHighScoresAtom = atomWithStorage<HighScoreData>(
@@ -13,6 +13,17 @@ export const highScoreAtom = atomFamily((key: HighScoreKey) => {
     return atom((get) => {
         const scores = get(allHighScoresAtom);
         return scores[key];
+    });
+});
+
+export const addToHighScoreAtom = atom(null, (get, set, score: number) => {
+    const config = get(configAtom);
+    const key = getKey(config);
+    const previous = get(highScoreAtom(key)) ?? 0;
+
+    set(allHighScoresAtom, {
+        ...get(allHighScoresAtom),
+        [key]: Math.max(score, previous),
     });
 });
 
