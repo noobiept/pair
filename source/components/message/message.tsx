@@ -1,7 +1,8 @@
 import { useAtom } from 'jotai';
 import { useEffect } from 'react';
 
-import { messageAtom } from '../modules/message';
+import { messageAtom } from '../../modules/message';
+import styles from './message.module.css';
 
 export function Message() {
     const [message, setMessage] = useAtom(messageAtom);
@@ -25,8 +26,8 @@ export function Message() {
     }
 
     return (
-        <div id="MessageContainer">
-            <div className="message">{message}</div>
+        <div id={styles.MessageContainer}>
+            <div className={styles.message}>{message}</div>
         </div>
     );
 }

@@ -1,0 +1,23 @@
+/* --- Game Values --- */
+
+#GameValues {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: white;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.value {
+    color: rgb(7, 95, 7);
+    font-weight: bold;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}

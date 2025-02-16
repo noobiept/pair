@@ -1,6 +1,7 @@
 import { useAtomValue } from 'jotai';
 
-import { dialogAtom } from '../modules/dialog';
+import { dialogAtom } from '../../modules/dialog';
+import styles from './dialog.module.css';
 
 export function Dialog() {
     const dialog = useAtomValue(dialogAtom);
@@ -11,10 +12,10 @@ export function Dialog() {
 
     return (
         <>
-            <div id="DialogOverlay"></div>
-            <div id="Dialog">
-                <div id="DialogTitle">{dialog.title}</div>
-                <div id="DialogBody">{dialog.body}</div>
+            <div id={styles.DialogOverlay}></div>
+            <div id={styles.Dialog}>
+                <div id={styles.DialogTitle}>{dialog.title}</div>
+                <div id={styles.DialogBody}>{dialog.body}</div>
                 <hr />
                 <div>
                     {dialog.buttons.map((button, index) => (

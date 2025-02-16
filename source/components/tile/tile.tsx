@@ -2,6 +2,7 @@ import { clsx } from 'clsx';
 
 import type { GridPosition } from '../../modules/game';
 import { useTile } from './tile.hooks';
+import styles from './tile.module.css';
 
 type TileProps = GridPosition;
 
@@ -13,17 +14,17 @@ export function Tile(props: TileProps) {
             data-id={props.imageName}
             onClick={onClick}
             className={clsx([
-                'tile',
+                styles.tile,
                 {
-                    showTile: state === 'visible',
-                    correctGuess: state === 'matched',
+                    [styles.showTile]: state === 'visible',
+                    [styles.correctGuess]: state === 'matched',
                 },
             ])}
         >
-            <img src={front} className="frontTile" alt="Front tile" />
+            <img src={front} className={styles.frontTile} alt="Front tile" />
             <img
                 src="images/tile_aqua.png"
-                className="backTile"
+                className={styles.backTile}
                 alt="Back tile"
             />
         </div>

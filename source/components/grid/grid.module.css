@@ -1,0 +1,10 @@
+#Container {
+    margin: 16px;
+    margin-top: 56px;
+    white-space: nowrap;
+}
+
+.lineContainer {
+    height: 100px;
+    margin: 4px;
+}

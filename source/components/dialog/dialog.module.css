@@ -1,0 +1,41 @@
+#Dialog {
+    background-color: white;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0px 0px 10px 3px black;
+    border-radius: 2px;
+    padding: 2px;
+    min-width: 150px;
+    z-index: 10;
+}
+
+#DialogTitle {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 10px 20px;
+    font-size: 110%;
+    font-weight: bold;
+}
+
+#DialogBody {
+    margin: 20px;
+}
+
+#DialogRestart {
+    margin: 5px;
+}
+
+#Dialog hr {
+    opacity: 0.5;
+}
+
+#DialogOverlay {
+    background-color: rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 5;
+}

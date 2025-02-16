@@ -1,0 +1,12 @@
+#MessageContainer {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 10px;
+}
+
+.message {
+    background-color: black;
+    color: white;
+    padding: 5px 20px;
+}

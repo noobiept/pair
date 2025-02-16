@@ -1,0 +1,22 @@
+#Menu {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#Menu input,
+#Menu button {
+    vertical-align: middle;
+}
+
+.value {
+    color: rgb(7, 95, 7);
+    font-weight: bold;
+}
+
+.item {
+    display: flex;
+    gap: 8px;
+}
