@@ -1,6 +1,6 @@
 import react from '@vitejs/plugin-react';
 import path from 'path';
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 
 import packageInfo from './package.json' with { type: 'json' };
 
@@ -15,5 +15,11 @@ export default defineConfig({
     plugins: [react()],
     server: {
         port: 8000,
+    },
+    test: {
+        include: ['source/**/*.test.{ts,tsx}'],
+        coverage: {
+            include: ['source/**/*.{ts,tsx}'],
+        },
     },
 });

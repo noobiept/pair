@@ -4,7 +4,7 @@ import { atomFamily, atomWithStorage } from 'jotai/utils';
 import { type Config, configAtom } from '../config';
 import type { HighScoreData, HighScoreKey } from './high-score.types';
 
-export const allHighScoresAtom = atomWithStorage<HighScoreData>(
+const allHighScoresAtom = atomWithStorage<HighScoreData>(
     'pair_high_scores',
     {},
 );

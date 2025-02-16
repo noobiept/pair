@@ -10,7 +10,7 @@ export default [
         files: ['**/*.{ts,tsx}'],
     },
     {
-        ignores: ['release/', 'webpack.config.js'],
+        ignores: ['release/', 'coverage/', 'webpack.config.js'],
     },
     {
         settings: { react: { version: 'detect' } },

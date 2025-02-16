@@ -20,4 +20,5 @@ jobs:
             - run: pnpm run unused:check
             - run: pnpm run css:check
             - run: pnpm run lint
+            - run: pnpm run test
             - run: pnpm run build
