@@ -86,12 +86,11 @@ function isAMatch(state: GameState, id1: GridPositionId, id2: GridPositionId) {
  */
 export function tileSelected(state: GameState, id: GridPositionId) {
     // already visible/matched so can't be used anymore
-    if (isAlreadyVisible(state, id)) {
-        return null;
-    }
-
-    // don't allow the same tile to be selected again
-    if (id === state.selected1 || id === state.selected2) {
+    if (
+        isAlreadyVisible(state, id) ||
+        id === state.selected1 ||
+        id === state.selected2
+    ) {
         return null;
     }
 
