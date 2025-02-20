@@ -2,7 +2,7 @@ import { atomEffect } from 'jotai-effect';
 
 import { configAtom } from '../config';
 import { dialogAtom } from '../dialog';
-import { addToHighScoreAtom } from '../high-score';
+import { highScoreAtom } from '../high-score';
 import { gameStateAtom } from './game.atom';
 import { calcScore, isGameOver } from './game-logic';
 
@@ -23,7 +23,7 @@ export const gameEffect = atomEffect((get, set) => {
     // when the game is over, show a dialog
     if (isGameOver(game, config)) {
         const score = calcScore(game, config);
-        set(addToHighScoreAtom, score);
+        set(highScoreAtom, score);
 
         set(dialogAtom, {
             title: 'Congratulations!',
