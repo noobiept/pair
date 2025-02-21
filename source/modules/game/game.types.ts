@@ -10,12 +10,13 @@ export type TilesData = {
 };
 
 export type GameState = {
-    tiles: TilesData;
-    grid: GridPosition[][];
-    selected1: GridPositionId | null;
-    selected2: GridPositionId | null;
-    matchedTiles: number;
-    guessesCount: number;
+    generated: Date; // last time the game was generated
+    tiles: TilesData; // all tiles in the game
+    grid: GridPosition[][]; // tiles organized in a grid
+    selected1: GridPositionId | null; // first selected tile
+    selected2: GridPositionId | null; // second selected tile
+    matchedTiles: number; // number of matched tiles
+    guessesCount: number; // number of guesses made
 };
 
 type SelectTileAction = {

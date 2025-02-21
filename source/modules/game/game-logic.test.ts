@@ -9,8 +9,11 @@ import type {
 } from './game.types';
 import { calcScore, isGameOver, newGame, tileSelected } from './game-logic';
 
+const generated = new Date();
+
 function createGameState(positions: GridPosition[]): GameState {
     return {
+        generated,
         grid: [positions],
         selected1: null,
         selected2: null,
@@ -119,6 +122,7 @@ describe(tileSelected.name, () => {
         const state = createGameState(positions);
 
         expect(tileSelected(state, positions[0].id)).toEqual({
+            generated,
             grid: [
                 [
                     { imageName: 'image1', id: 'id1' },
@@ -172,6 +176,7 @@ describe(tileSelected.name, () => {
         state = selectTiles(state, ['id1', 'id2'] as GridPositionId[]);
 
         expect(state).toEqual({
+            generated,
             grid: [
                 [
                     { imageName: 'image1', id: 'id1' },
@@ -206,6 +211,7 @@ describe(tileSelected.name, () => {
         state = selectTiles(state, ['id1', 'id3'] as GridPositionId[]);
 
         expect(state).toEqual({
+            generated,
             grid: [
                 [
                     { imageName: 'image1', id: 'id1' },
@@ -319,6 +325,7 @@ describe(calcScore.name, () => {
 
         tests.forEach(({ guesses, score }) => {
             const state = {
+                generated,
                 grid: [],
                 selected1: null,
                 selected2: null,

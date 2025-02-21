@@ -28,6 +28,7 @@ function gameReducer(state: GameState, action: GameAction) {
             }, {});
 
             return {
+                generated: new Date(),
                 tiles,
                 grid,
                 selected1: null,
@@ -70,6 +71,7 @@ function gameReducer(state: GameState, action: GameAction) {
 
 export const gameStateAtom = atomWithReducer<GameState, GameAction>(
     {
+        generated: new Date(),
         tiles: {},
         grid: [],
         selected1: null,
@@ -85,4 +87,8 @@ export const gridAtom = selectAtom(gameStateAtom, (state) => state.grid);
 export const guessesCountAtom = selectAtom(
     gameStateAtom,
     (state) => state.guessesCount,
+);
+
+export const generatedTimeAtom = selectAtom(gameStateAtom, (state) =>
+    state.generated.getTime(),
 );
