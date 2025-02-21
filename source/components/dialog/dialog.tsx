@@ -17,7 +17,7 @@ export function Dialog() {
                 <div id={styles.DialogTitle}>{dialog.title}</div>
                 <div id={styles.DialogBody}>{dialog.body}</div>
                 <hr />
-                <div>
+                <div className={styles.buttons}>
                     {dialog.buttons.map((button, index) => (
                         <button key={index} onClick={button.action}>
                             {button.text}

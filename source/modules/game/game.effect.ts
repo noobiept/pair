@@ -30,7 +30,7 @@ export const gameEffect = atomEffect((get, set) => {
             body: `You have won the game! Score: ${score}%`,
             buttons: [
                 {
-                    text: 'Restart',
+                    text: 'New Game',
                     action: () => {
                         set(gameStateAtom, {
                             type: 'game/reset-grid',

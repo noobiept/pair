@@ -321,6 +321,10 @@ describe(calcScore.name, () => {
                 guesses: bestGuessScenario * 4,
                 score: 25,
             },
+            {
+                guesses: 0,
+                score: 0,
+            },
         ];
 
         tests.forEach(({ guesses, score }) => {

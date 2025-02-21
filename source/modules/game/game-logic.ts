@@ -158,6 +158,10 @@ export function isGameOver(game: GameState, config: Config) {
 }
 
 export function calcScore(game: GameState, config: Config) {
+    if (game.guessesCount === 0) {
+        return 0;
+    }
+
     const totalPairs = (config.columns * config.lines) / 2;
     const score = Math.round((totalPairs / game.guessesCount) * 100);
 

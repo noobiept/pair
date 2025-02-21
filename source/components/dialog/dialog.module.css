@@ -5,8 +5,8 @@
     top: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0px 0px 10px 3px black;
-    border-radius: 2px;
     padding: 2px;
+    border-radius: 2px;
     min-width: 150px;
     z-index: 10;
 }
@@ -22,12 +22,8 @@
     margin: 20px;
 }
 
-#DialogRestart {
-    margin: 5px;
-}
-
 #Dialog hr {
-    opacity: 0.5;
+    opacity: 0.2;
 }
 
 #DialogOverlay {
@@ -38,4 +34,12 @@
     width: 100vw;
     height: 100vh;
     z-index: 5;
+}
+
+.buttons {
+    margin: 8px;
+}
+
+.buttons > button {
+    font-size: 1.1em;
 }
