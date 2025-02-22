@@ -1,0 +1,13 @@
+{
+    "top-menu.highscore": "High-score:",
+    "top-menu.guesses": "Guesses:",
+    "tile.front-alt": "Front tile",
+    "tile.back-alt": "Back tile",
+    "bottom-menu.columns": "Columns",
+    "bottom-menu.lines": "Lines",
+    "bottom-menu.images-used": "Images used",
+    "bottom-menu.restart": "Restart",
+    "game-over.title": "Congratulations!",
+    "game-over.message": "You have won the game! Score: {{score}}%",
+    "game-over.new-game": "New Game"
+}

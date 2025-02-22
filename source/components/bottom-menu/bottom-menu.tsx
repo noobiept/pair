@@ -1,7 +1,10 @@
+import { useTranslation } from 'react-i18next';
+
 import { useBottomMenu } from './bottom-menu.hooks';
 import styles from './bottom-menu.module.css';
 
 export function BottomMenu() {
+    const { t } = useTranslation();
     const {
         config,
         onColumnsChange,
@@ -13,7 +16,7 @@ export function BottomMenu() {
     return (
         <div id={styles.Menu}>
             <div className={styles.item}>
-                <label htmlFor="Columns">Columns</label>
+                <label htmlFor="Columns">{t('bottom-menu.columns')}</label>
                 <span id="ColumnsValue" className={styles.value}>
                     {config.columns}
                 </span>
@@ -27,7 +30,7 @@ export function BottomMenu() {
                 />
             </div>
             <div className={styles.item}>
-                <label htmlFor="Lines">Lines</label>
+                <label htmlFor="Lines">{t('bottom-menu.lines')}</label>
                 <span id="LinesValue" className={styles.value}>
                     {config.lines}
                 </span>
@@ -42,7 +45,9 @@ export function BottomMenu() {
             </div>
 
             <div className={styles.item}>
-                <label htmlFor="ImagesUsed">Images used</label>
+                <label htmlFor="ImagesUsed">
+                    {t('bottom-menu.images-used')}
+                </label>
                 <span id="ImagesUsedValue" className={styles.value}>
                     {config.imagesUsed}
                 </span>
@@ -57,7 +62,7 @@ export function BottomMenu() {
             </div>
 
             <button id="Restart" onClick={onRestart}>
-                Restart
+                {t('bottom-menu.restart')}
             </button>
         </div>
     );

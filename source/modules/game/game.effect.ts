@@ -1,3 +1,4 @@
+import i18n from 'i18next';
 import { atomEffect } from 'jotai-effect';
 
 import { configAtom } from '../config';
@@ -26,11 +27,11 @@ export const gameEffect = atomEffect((get, set) => {
         set(highScoreAtom, score);
 
         set(dialogAtom, {
-            title: 'Congratulations!',
-            body: `You have won the game! Score: ${score}%`,
+            title: i18n.t('game-over.title'),
+            body: i18n.t('game-over.message', { score }),
             buttons: [
                 {
-                    text: 'New Game',
+                    text: i18n.t('game-over.new-game'),
                     action: () => {
                         set(gameStateAtom, {
                             type: 'game/reset-grid',
