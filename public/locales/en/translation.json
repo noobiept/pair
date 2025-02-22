@@ -9,5 +9,6 @@
     "bottom-menu.restart": "Restart",
     "game-over.title": "Congratulations!",
     "game-over.message": "You have won the game! Score: {{score}}%",
-    "game-over.new-game": "New Game"
+    "game-over.new-game": "New Game",
+    "message.restart": "Restarted"
 }
