@@ -53,6 +53,7 @@
 }
 
 .correctGuess {
+    transform: rotateY(180deg);
     animation: correct;
     animation-fill-mode: forwards;
     animation-timing-function: ease;

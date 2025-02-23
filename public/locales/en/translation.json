@@ -10,5 +10,5 @@
     "game-over.title": "Congratulations!",
     "game-over.message": "You have won the game! Score: {{score}}%",
     "game-over.new-game": "New Game",
-    "message.restart": "Restarted"
+    "message.restart": "Game Restarted"
 }
