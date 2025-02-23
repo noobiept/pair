@@ -4,7 +4,7 @@ import { atomEffect } from 'jotai-effect';
 import { configAtom } from '../config';
 import { dialogAtom } from '../dialog';
 import { highScoreAtom } from '../high-score';
-import { gameStateAtom } from './game.atom';
+import { gameStateAtom, restartGameAtom } from './game.atom';
 import { calcScore, isGameOver } from './game-logic';
 
 export const gameEffect = atomEffect((get, set) => {
@@ -33,13 +33,7 @@ export const gameEffect = atomEffect((get, set) => {
                 {
                     text: i18n.t('game-over.new-game'),
                     action: () => {
-                        set(gameStateAtom, {
-                            type: 'game/reset-grid',
-                            payload: {
-                                config,
-                            },
-                        });
-                        set(dialogAtom, undefined);
+                        set(restartGameAtom);
                     },
                 },
             ],

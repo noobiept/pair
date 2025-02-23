@@ -1,5 +1,10 @@
+import i18n from 'i18next';
+import { atom } from 'jotai';
 import { atomWithReducer, selectAtom } from 'jotai/utils';
 
+import { configAtom } from '../config';
+import { dialogAtom } from '../dialog';
+import { messageAtom } from '../message';
 import type { GameAction, GameState, TilesData } from './game.types';
 import { newGame, tileSelected } from './game-logic';
 
@@ -92,3 +97,15 @@ export const guessesCountAtom = selectAtom(
 export const generatedTimeAtom = selectAtom(gameStateAtom, (state) =>
     state.generated.getTime(),
 );
+
+export const restartGameAtom = atom(null, (get, set) => {
+    const config = get(configAtom);
+    set(gameStateAtom, {
+        type: 'game/reset-grid',
+        payload: {
+            config,
+        },
+    });
+    set(messageAtom, i18n.t('message.restart'));
+    set(dialogAtom, undefined);
+});

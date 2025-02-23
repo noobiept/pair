@@ -1,14 +1,12 @@
 import { useAtom, useSetAtom } from 'jotai';
 import { useCallback } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import { configAtom } from '../../modules/config';
-import { messageAtom } from '../../modules/message';
+import { restartGameAtom } from '../../modules/game';
 
 export function useBottomMenu() {
     const [config, setConfig] = useAtom(configAtom);
-    const setMessage = useSetAtom(messageAtom);
-    const { t } = useTranslation();
+    const onRestart = useSetAtom(restartGameAtom);
 
     const onColumnsChange = useCallback(
         (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +52,6 @@ export function useBottomMenu() {
         },
         [config, setConfig],
     );
-    const onRestart = useCallback(() => {
-        setConfig({
-            ...config,
-        });
-        setMessage(t('message.restart'));
-    }, [config, setConfig, t, setMessage]);
 
     return {
         config,

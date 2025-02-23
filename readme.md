@@ -4,6 +4,10 @@ Match identical tiles with each other, to make a pair. Find all the pairs to win
 
 ![Screenshot](screenshot.png)
 
+# Shortcuts
+
+- `r`: Restarts the game.
+
 # Development
 
 - `corepack enable`
