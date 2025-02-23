@@ -12,6 +12,7 @@ export default defineConfig({
         outDir: path.resolve(__dirname, `release/pair ${packageInfo.version}`),
         emptyOutDir: true,
     },
+    base: './',
     plugins: [react()],
     server: {
         port: 8000,
