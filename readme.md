@@ -1,4 +1,4 @@
-# [Try it out](https://nbpt.eu/games/pair/)
+# [Try it out](https://pedruu.ch/games/pair/)
 
 Match identical tiles with each other, to make a pair. Find all the pairs to win the game.
 
