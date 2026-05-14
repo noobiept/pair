@@ -3,6 +3,8 @@ declare module '*.module.css' {
     export default content;
 }
 
+declare module '*.css';
+
 // Add Disposable interface for @vitest/spy compatibility
 interface Disposable {
     dispose(): void;
